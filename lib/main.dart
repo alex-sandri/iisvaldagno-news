@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(
+                    title: SelectableText(
                       _items[index].title,
                     ),
                   );
