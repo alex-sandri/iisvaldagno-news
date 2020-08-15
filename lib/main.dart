@@ -107,6 +107,10 @@ class _HomeState extends State<Home> {
                               dense: true,
                               title: SelectableText(
                                 link.text,
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             );
                           },
