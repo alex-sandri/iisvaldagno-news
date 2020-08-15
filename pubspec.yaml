@@ -23,6 +23,7 @@ environment:
 dependencies:
   dart_rss: ^1.1.0
   http: ^0.12.2
+  html: ^0.14.0+3
   flutter:
     sdk: flutter
 

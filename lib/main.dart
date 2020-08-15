@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart';
 
 void main() {
   runApp(MyApp());
@@ -66,6 +67,19 @@ class _HomeState extends State<Home> {
             : ListView.builder(
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
+                  final RssItem item = _items[index];
+
+                  final List<RssContentLink> links = [];
+
+                  final document = parse(item.content.value);
+
+                  document.querySelectorAll("a").forEach((element) {
+                    links.add(RssContentLink(
+                      text: element.text,
+                      url: Uri.parse(element.attributes["href"]),
+                    ));
+                  });
+
                   return ListTile(
                     trailing: IconButton(
                       icon: Icon(Icons.open_in_new),
@@ -74,7 +88,27 @@ class _HomeState extends State<Home> {
                       },
                     ),
                     title: SelectableText(
-                      _items[index].title,
+                      item.title,
+                    ),
+                    subtitle: Column(
+                      children: [
+                        SelectableText(
+                          parse(item.content.value).body.text,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: links.length,
+                          itemBuilder: (context, index) {
+                            final RssContentLink link = links[index];
+
+                            return ListTile(
+                              title: Text(
+                                link.text,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   );
                 },
@@ -83,4 +117,15 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+}
+
+class RssContentLink
+{
+  String text;
+  Uri url;
+
+  RssContentLink({
+    @required this.text,
+    @required this.url,
+  });
 }
