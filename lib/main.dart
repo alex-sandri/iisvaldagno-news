@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _page = 1;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -34,6 +37,23 @@ class _HomeState extends State<Home> {
           title: Text(
             "IIS Valdagno News",
           ),
+        ),
+        body: FutureBuilder(
+          future: http.get("https://www.iisvaldagno.it/page/$_page/?s=&feed=rss2"),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return LinearProgressIndicator();
+
+            final http.Response response = snapshot.data;
+
+            return ListView.builder(
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                return ListTile(
+
+                );
+              },
+            );
+          },
         ),
       ),
     );
