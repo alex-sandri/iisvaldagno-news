@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
                     subtitle: Column(
                       children: [
                         SelectableText(
-                          parse(item.content.value).body.text,
+                          document.querySelector("p").text,
                         ),
                         ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
