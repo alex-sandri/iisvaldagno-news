@@ -90,6 +90,7 @@ class _HomeState extends State<Home> {
                       item.title,
                     ),
                     subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SelectableText(
                           document.querySelector("p").text,
