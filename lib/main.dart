@@ -29,7 +29,26 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _page = 1;
 
-  List<RssItem> _items = [];
+  List<RssItem> _items;
+
+  Future<void> _handleRefresh() async {
+    final http.Response response = await http.get("https://www.iisvaldagno.it/page/$_page/?s=&feed=rss2");
+
+    final RssFeed feed = RssFeed.parse(response.body);
+
+    final List<RssItem> items = feed.items;
+
+    if (mounted)
+      setState(() {
+        _items = items;
+      });
+  }
+
+  void initState() {
+    super.initState();
+
+    _handleRefresh();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,26 +59,20 @@ class _HomeState extends State<Home> {
             "IIS Valdagno News",
           ),
         ),
-        body: FutureBuilder(
-          future: http.get("https://www.iisvaldagno.it/page/$_page/?s=&feed=rss2"),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return LinearProgressIndicator();
-
-            final http.Response response = snapshot.data;
-
-            _items = RssFeed.parse(response.body).items;
-
-            return ListView.builder(
-              itemCount: _items.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    _items[index].title,
-                  ),
-                );
-              },
-            );
-          },
+        body: RefreshIndicator(
+          onRefresh: _handleRefresh,
+          child: _items == null
+            ? LinearProgressIndicator()
+            : ListView.builder(
+                itemCount: _items.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      _items[index].title,
+                    ),
+                  );
+                },
+              ),
         ),
       ),
     );
