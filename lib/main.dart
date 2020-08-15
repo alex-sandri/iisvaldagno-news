@@ -29,6 +29,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _page = 1;
 
+  List<RssItem> _items = [];
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -45,11 +47,15 @@ class _HomeState extends State<Home> {
 
             final http.Response response = snapshot.data;
 
+            _items = RssFeed.parse(response.body).items;
+
             return ListView.builder(
-              itemCount: 1,
+              itemCount: _items.length,
               itemBuilder: (context, index) {
                 return ListTile(
-
+                  title: Text(
+                    _items[index].title,
+                  ),
                 );
               },
             );
