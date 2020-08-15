@@ -64,7 +64,8 @@ class _HomeState extends State<Home> {
           onRefresh: _handleRefresh,
           child: _items == null
             ? LinearProgressIndicator()
-            : ListView.builder(
+            : ListView.separated(
+                separatorBuilder: (context, index) => Divider(),
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   final RssItem item = _items[index];
