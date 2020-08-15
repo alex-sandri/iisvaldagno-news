@@ -67,6 +67,12 @@ class _HomeState extends State<Home> {
                 itemCount: _items.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    trailing: IconButton(
+                      icon: Icon(Icons.open_in_new),
+                      onPressed: () {
+                        // TODO
+                      },
+                    ),
                     title: SelectableText(
                       _items[index].title,
                     ),
