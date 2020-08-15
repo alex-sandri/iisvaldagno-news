@@ -96,6 +96,7 @@ class _HomeState extends State<Home> {
                           parse(item.content.value).body.text,
                         ),
                         ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: links.length,
                           itemBuilder: (context, index) {
