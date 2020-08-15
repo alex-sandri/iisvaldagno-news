@@ -104,6 +104,7 @@ class _HomeState extends State<Home> {
                             final RssContentLink link = links[index];
 
                             return ListTile(
+                              dense: true,
                               title: Text(
                                 link.text,
                               ),
