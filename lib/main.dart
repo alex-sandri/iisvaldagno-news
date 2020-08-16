@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
 import 'package:iisvaldagno_news/news.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
@@ -141,6 +142,11 @@ class _HomeState extends State<Home> {
                     ),
                     title: Text(
                       item.title,
+                    ),
+                    subtitle: Text(
+                      // Source
+                      // https://stackoverflow.com/a/61801371
+                      DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(item.pubDate).toString(),
                     ),
                     onTap: () {
                       Navigator.of(context).push(
