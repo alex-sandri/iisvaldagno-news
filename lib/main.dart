@@ -132,17 +132,6 @@ class _HomeState extends State<Home> {
 
                   final RssItem item = _items[index];
 
-                  final List<RssContentLink> links = [];
-
-                  final document = parse(item.content.value);
-
-                  document.querySelectorAll("a").forEach((element) {
-                    links.add(RssContentLink(
-                      text: element.text,
-                      url: Uri.parse(element.attributes["href"]),
-                    ));
-                  });
-
                   return ListTile(
                     trailing: IconButton(
                       icon: Icon(Icons.open_in_new),
