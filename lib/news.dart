@@ -98,20 +98,22 @@ class _NewsState extends State<News> {
                             )
                           : null,
                         onPressed: () {
-                          Uri url;
+                          String url;
 
                           switch (category.value)
                           {
-                            case "Notizie in evidenza": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/?feed=rss2"); break;
-                            case "In evidenza ITI": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/iti-news/?feed=rss2"); break;
-                            case "In evidenza ITE": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ite-news/?feed=rss2"); break;
-                            case "In evidenza IP": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ip-news/?feed=rss2"); break;
-                            default: url = Uri.parse("https://www.iisvaldagno.it/tag/${category.value}/?feed=rss2"); break;
+                            case "Notizie in evidenza": url = "https://www.iisvaldagno.it/categorie/news"; break;
+                            case "In evidenza ITI": url = "https://www.iisvaldagno.it/categorie/news/iti-news"; break;
+                            case "In evidenza ITE": url = "https://www.iisvaldagno.it/categorie/news/ite-news"; break;
+                            case "In evidenza IP": url = "https://www.iisvaldagno.it/categorie/news/ip-news"; break;
+                            default: url = "https://www.iisvaldagno.it/tag/${category.value}"; break;
                           }
+
+                          url += "/page/{{PAGE}}/?feed=rss2";
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Home(url),
+                              builder: (context) => Home(Uri.parse(url)),
                             ),
                           );
                         },
