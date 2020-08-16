@@ -102,11 +102,11 @@ class _NewsState extends State<News> {
 
                           switch (category.value)
                           {
-                            case "Notizie in evidenza": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/"); break;
-                            case "In evidenza ITI": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/iti-news/"); break;
-                            case "In evidenza ITE": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ite-news/"); break;
-                            case "In evidenza IP": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ip-news/"); break;
-                            default: url = Uri.parse("https://www.iisvaldagno.it/tag/${category.value}/"); break;
+                            case "Notizie in evidenza": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/?feed=rss2"); break;
+                            case "In evidenza ITI": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/iti-news/?feed=rss2"); break;
+                            case "In evidenza ITE": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ite-news/?feed=rss2"); break;
+                            case "In evidenza IP": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ip-news/?feed=rss2"); break;
+                            default: url = Uri.parse("https://www.iisvaldagno.it/tag/${category.value}/?feed=rss2"); break;
                           }
 
                           Navigator.of(context).push(
