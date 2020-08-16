@@ -64,6 +64,7 @@ class _NewsState extends State<News> {
                 children: [
                   SelectableText(
                     widget.item.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   SelectableText(
                     document.querySelector("p").text,
