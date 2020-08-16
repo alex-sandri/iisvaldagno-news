@@ -72,7 +72,7 @@ class _NewsState extends State<News> {
               ),
               Column(
                 children: [
-                  ListView.builder(
+                  ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: links.length,
@@ -93,6 +93,7 @@ class _NewsState extends State<News> {
                         },
                       );
                     },
+                    separatorBuilder: (context, index) => Divider(),
                   ),
                 ],
               ),
