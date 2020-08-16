@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
+import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+class RssContentLink
+{
+  String text;
+  Uri url;
+
+  RssContentLink({
+    @required this.text,
+    @required this.url,
+  });
+}
 
 class News extends StatefulWidget {
   final RssItem item;
@@ -14,6 +26,17 @@ class News extends StatefulWidget {
 class _NewsState extends State<News> {
   @override
   Widget build(BuildContext context) {
+    final List<RssContentLink> links = [];
+
+    final document = parse(widget.item.content.value);
+
+    document.querySelectorAll("a").forEach((element) {
+      links.add(RssContentLink(
+        text: element.text,
+        url: Uri.parse(element.attributes["href"]),
+      ));
+    });
+
     return Material(
       child: DefaultTabController(
         length: 2,
@@ -37,7 +60,16 @@ class _NewsState extends State<News> {
           ),
           body: TabBarView(
             children: [
-              Container(),
+              Column(
+                children: [
+                  SelectableText(
+                    widget.item.title,
+                  ),
+                  SelectableText(
+                    document.querySelector("p").text,
+                  ),
+                ],
+              ),
               Container(),
             ],
           ),

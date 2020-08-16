@@ -158,14 +158,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-class RssContentLink
-{
-  String text;
-  Uri url;
-
-  RssContentLink({
-    @required this.text,
-    @required this.url,
-  });
-}
