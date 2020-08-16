@@ -97,7 +97,18 @@ class _NewsState extends State<News> {
                             )
                           : null,
                         onPressed: () {
-                          // TODO
+                          Uri url;
+
+                          switch (category.value)
+                          {
+                            case "Notizie in evidenza": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/"); break;
+                            case "In evidenza ITI": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/iti-news/"); break;
+                            case "In evidenza ITE": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ite-news/"); break;
+                            case "In evidenza IP": url = Uri.parse("https://www.iisvaldagno.it/categorie/news/ip-news/"); break;
+                            default: url = Uri.parse("https://www.iisvaldagno.it/tag/${category.value}/"); break;
+                          }
+
+                          // TODO: load url response
                         },
                       );
                     }).toList(),
