@@ -85,7 +85,9 @@ class _NewsState extends State<News> {
                 ],
               ),
               ListView.separated(
-                itemCount: links.length + 1,
+                itemCount: links.isNotEmpty
+                  ? links.length
+                  : 1,
                 itemBuilder: (context, index) {
                   if (links.isEmpty)
                     return Padding(
