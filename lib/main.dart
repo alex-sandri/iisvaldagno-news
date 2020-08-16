@@ -142,8 +142,8 @@ class _HomeState extends State<Home> {
                     ));
                   });
 
-                  return ListTile(
-                    trailing: IconButton(
+                  return ExpansionTile(
+                    leading: IconButton(
                       icon: Icon(Icons.open_in_new),
                       onPressed: () async {
                         if (await canLaunch(item.link))
@@ -153,37 +153,34 @@ class _HomeState extends State<Home> {
                     title: SelectableText(
                       item.title,
                     ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(
-                          document.querySelector("p").text,
-                        ),
-                        ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: links.length,
-                          itemBuilder: (context, index) {
-                            final RssContentLink link = links[index];
-
-                            return ListTile(
-                              dense: true,
-                              title: Text(
-                                link.text,
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                              onTap: () async {
-                                if (await canLaunch(link.url.toString()))
-                                  await launch(link.url.toString());
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                    subtitle: SelectableText(
+                      document.querySelector("p").text,
                     ),
+                    children: [
+                      ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: links.length,
+                        itemBuilder: (context, index) {
+                          final RssContentLink link = links[index];
+
+                          return ListTile(
+                            dense: true,
+                            title: Text(
+                              link.text,
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                            onTap: () async {
+                              if (await canLaunch(link.url.toString()))
+                                await launch(link.url.toString());
+                            },
+                          );
+                        },
+                      ),
+                    ],
                   );
                 },
               ),
