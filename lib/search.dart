@@ -24,8 +24,21 @@ class Search extends SearchDelegate
   
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
+    return FutureBuilder(
+      future: null,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+
+        return ListView.builder(
+          itemCount : 0,
+          itemBuilder: (context, index) {
+            return ListTile(
+
+            );
+          },
+        );
+      },
+    );
   }
   
   @override
