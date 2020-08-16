@@ -4,8 +4,14 @@ class Search extends SearchDelegate
 {
   @override
   List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
-    throw UnimplementedError();
+    return [
+      IconButton(
+        icon: Icon(Icons.close),
+        onPressed: () {
+          query = "";
+        },
+      )
+    ];
   }
   
   @override
