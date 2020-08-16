@@ -150,10 +150,10 @@ class _HomeState extends State<Home> {
                           await launch(item.link);
                       },
                     ),
-                    title: SelectableText(
+                    title: Text(
                       item.title,
                     ),
-                    subtitle: SelectableText(
+                    subtitle: Text(
                       document.querySelector("p").text,
                     ),
                     children: [
