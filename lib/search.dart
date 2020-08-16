@@ -6,6 +6,15 @@ import 'package:iisvaldagno_news/news_list_tile.dart';
 class Search extends SearchDelegate
 {
   @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    if (theme.brightness == Brightness.light) return super.appBarTheme(context);
+
+    return theme;
+  }
+  
+  @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
