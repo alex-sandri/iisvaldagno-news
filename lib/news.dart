@@ -60,8 +60,9 @@ class _NewsState extends State<News> {
             actions: [
               IconButton(
                 icon: Icon(Icons.open_in_new),
-                onPressed: () {
-                  // TODO
+                onPressed: () async {
+                  if (await canLaunch(widget.item.link))
+                    await launch(widget.item.link);
                 },
               )
             ],
