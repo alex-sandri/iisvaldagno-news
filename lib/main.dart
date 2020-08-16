@@ -146,7 +146,10 @@ class _HomeState extends State<Home> {
                     subtitle: Text(
                       // Source
                       // https://stackoverflow.com/a/61801371
-                      DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(item.pubDate).toString(),
+                      DateFormat
+                        .yMMMMd()
+                        .add_jm()
+                        .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(item.pubDate)),
                     ),
                     onTap: () {
                       Navigator.of(context).push(
