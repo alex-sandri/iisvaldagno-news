@@ -46,6 +46,8 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _handleRefresh() async {
+    _page = 1;
+
     final List<RssItem> items = await _getItems();
 
     if (mounted)
