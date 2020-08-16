@@ -83,8 +83,9 @@ class _HomeState extends State<Home> {
                   return ListTile(
                     trailing: IconButton(
                       icon: Icon(Icons.open_in_new),
-                      onPressed: () {
-                        // TODO
+                      onPressed: () async {
+                        if (await canLaunch(item.link))
+                          await launch(item.link);
                       },
                     ),
                     title: SelectableText(
