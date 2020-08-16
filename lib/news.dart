@@ -113,7 +113,7 @@ class _NewsState extends State<News> {
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Home(Uri.parse(url)),
+                              builder: (context) => Home(url),
                             ),
                           );
                         },

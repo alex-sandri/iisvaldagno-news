@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
 }
 
 class Home extends StatefulWidget {
-  final Uri url;
+  final String url;
 
   Home([ this.url ]);
 
@@ -40,9 +40,8 @@ class _HomeState extends State<Home> {
   bool _showLoadMoreSpinner = false;
 
   Future<List<RssItem>> _getItems() async {
-    print(widget.url);
     final http.Response response = await http.get(
-      widget.url?.toString()?.replaceFirst("{{PAGE}}", _page.toString())
+      widget.url?.replaceFirst("{{PAGE}}", _page.toString())
       ?? "https://www.iisvaldagno.it/page/$_page/?s=&feed=rss2"
     );
 
