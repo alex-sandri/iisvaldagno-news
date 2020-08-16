@@ -39,7 +39,12 @@ class Search extends SearchDelegate
     return FutureBuilder<http.Response>(
       future: http.get(Uri.encodeFull("https://www.iisvaldagno.it/?s=$query&feed=rss2")),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return LinearProgressIndicator();
+        if (!snapshot.hasData)
+          return Column(
+            children: [
+              LinearProgressIndicator(),
+            ],
+          );
 
         final RssFeed feed = RssFeed.parse(snapshot.data.body);
 
