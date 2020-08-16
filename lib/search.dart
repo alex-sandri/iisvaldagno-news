@@ -43,7 +43,6 @@ class Search extends SearchDelegate
   
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    throw UnimplementedError();
+    return ListView();
   }
 }
