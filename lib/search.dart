@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:dart_rss/dart_rss.dart';
+import 'package:iisvaldagno_news/news_list_tile.dart';
 
 class Search extends SearchDelegate
 {
@@ -36,11 +37,9 @@ class Search extends SearchDelegate
         final List<RssItem> items = feed.items;
 
         return ListView.builder(
-          itemCount: 0,
+          itemCount: items.length,
           itemBuilder: (context, index) {
-            return ListTile(
-
-            );
+            return NewsListTile(items[index]);
           },
         );
       },
