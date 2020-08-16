@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
 
                             return ListTile(
                               dense: true,
-                              title: SelectableText(
+                              title: Text(
                                 link.text,
                                 style: TextStyle(
                                   color: Colors.blue,
