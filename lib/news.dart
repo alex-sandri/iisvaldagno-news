@@ -26,9 +26,11 @@ class _NewsState extends State<News> {
               tabs: [
                 Tab(
                   text: "News",
+                  icon: Icon(Icons.view_headline),
                 ),
                 Tab(
                   text: "Allegati",
+                  icon: Icon(Icons.attachment),
                 ),
               ],
             ),
