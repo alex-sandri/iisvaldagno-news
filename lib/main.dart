@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
-import 'package:html/parser.dart';
 import 'package:iisvaldagno_news/news.dart';
 import 'package:url_launcher/url_launcher.dart';
 
