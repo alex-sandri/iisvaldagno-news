@@ -118,11 +118,9 @@ class _NewsState extends State<News> {
                         text: link.text,
                       ));
 
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Testo copiato negli appunti"),
-                        ),
-                      );
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text("Testo copiato negli appunti"),
+                      ));
                     },
                   );
                 },
