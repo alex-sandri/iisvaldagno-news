@@ -85,8 +85,17 @@ class _NewsState extends State<News> {
                 ],
               ),
               ListView.separated(
-                itemCount: links.length,
+                itemCount: links.length + 1,
                 itemBuilder: (context, index) {
+                  if (links.isEmpty)
+                    return Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Text(
+                        "Non sono presenti allegati",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+
                   final RssContentLink link = links[index];
 
                   return ListTile(
