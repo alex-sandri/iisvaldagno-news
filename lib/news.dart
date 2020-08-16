@@ -74,6 +74,7 @@ class _NewsState extends State<News> {
                 padding: EdgeInsets.all(8),
                 children: [
                   Wrap(
+                    spacing: 4,
                     children: widget.item.categories.map((category) {
                       return ActionChip(
                         label: Text(
