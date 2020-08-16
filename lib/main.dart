@@ -94,12 +94,12 @@ class _HomeState extends State<Home> {
                     return Padding(
                       padding: EdgeInsets.all(4),
                       child: FlatButton(
-                        color: Theme.of(context).appBarTheme.color,
+                        color: Theme.of(context).primaryColor,
                         padding: EdgeInsets.all(15),
                         child: Text(
                           "Carica più elementi",
                           style: TextStyle(
-                            color: Theme.of(context).accentColor,
+                            color: Colors.white,
                           ),
                         ),
                         shape: RoundedRectangleBorder(
