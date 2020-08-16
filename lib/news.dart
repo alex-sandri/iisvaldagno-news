@@ -73,6 +73,21 @@ class _NewsState extends State<News> {
               ListView(
                 padding: EdgeInsets.all(8),
                 children: [
+                  Wrap(
+                    children: widget.item.categories.map((category) {
+                      return ActionChip(
+                        label: Text(
+                          category.value,
+                        ),
+                        onPressed: () {
+                          // TODO
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
                   SelectableText(
                     widget.item.title,
                     style: Theme.of(context).textTheme.headline6,
