@@ -76,10 +76,26 @@ class _NewsState extends State<News> {
                   Wrap(
                     spacing: 4,
                     children: widget.item.categories.map((category) {
+                      Color chipColor;
+
+                      switch (category.value)
+                      {
+                        case "Notizie in evidenza": chipColor = Color(0xff013777); break;
+                        case "In evidenza ITI": chipColor = Color(0xffa6d514); break;
+                        case "In evidenza ITE": chipColor = Color(0xffff9100); break;
+                        case "In evidenza IP": chipColor = Color(0xff1f8ebf); break;
+                      }
+
                       return ActionChip(
+                        backgroundColor: chipColor,
                         label: Text(
                           category.value,
                         ),
+                        labelStyle: chipColor != null
+                          ? TextStyle(
+                              backgroundColor: chipColor,
+                            )
+                          : null,
                         onPressed: () {
                           // TODO
                         },
