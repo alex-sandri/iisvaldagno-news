@@ -37,8 +37,19 @@ class Search extends SearchDelegate
         final List<RssItem> items = feed.items;
 
         return ListView.builder(
-          itemCount: items.length,
+          itemCount: items.isNotEmpty
+            ? items.length
+            : 1,
           itemBuilder: (context, index) {
+            if (items.isEmpty)
+              return Padding(
+                padding: EdgeInsets.all(4),
+                child: Text(
+                  "Nessun risultato",
+                  textAlign: TextAlign.center,
+                ),
+              );
+
             return NewsListTile(items[index]);
           },
         );
