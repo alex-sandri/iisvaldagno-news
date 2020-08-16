@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
+import 'package:flutter/services.dart';
 import 'package:html/parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -111,6 +112,17 @@ class _NewsState extends State<News> {
                     onTap: () async {
                       if (await canLaunch(link.url.toString()))
                         await launch(link.url.toString());
+                    },
+                    onLongPress: () async {
+                      await Clipboard.setData(ClipboardData(
+                        text: link.text,
+                      ));
+
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Testo copiato negli appunti"),
+                        ),
+                      );
                     },
                   );
                 },
