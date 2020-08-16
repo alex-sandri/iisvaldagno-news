@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MyApp());
@@ -111,6 +112,10 @@ class _HomeState extends State<Home> {
                                   decoration: TextDecoration.underline,
                                 ),
                               ),
+                              onTap: () async {
+                                if (await canLaunch(link.url.toString()))
+                                  await launch(link.url.toString());
+                              },
                             );
                           },
                         ),
