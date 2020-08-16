@@ -70,32 +70,26 @@ class _NewsState extends State<News> {
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: links.length,
-                    itemBuilder: (context, index) {
-                      final RssContentLink link = links[index];
+              ListView.separated(
+                itemCount: links.length,
+                itemBuilder: (context, index) {
+                  final RssContentLink link = links[index];
 
-                      return ListTile(
-                        title: Text(
-                          link.text,
-                          style: TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                        onTap: () async {
-                          if (await canLaunch(link.url.toString()))
-                            await launch(link.url.toString());
-                        },
-                      );
+                  return ListTile(
+                    title: Text(
+                      link.text,
+                      style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    onTap: () async {
+                      if (await canLaunch(link.url.toString()))
+                        await launch(link.url.toString());
                     },
-                    separatorBuilder: (context, index) => Divider(),
-                  ),
-                ],
+                  );
+                },
+                separatorBuilder: (context, index) => Divider(),
               ),
             ],
           ),
