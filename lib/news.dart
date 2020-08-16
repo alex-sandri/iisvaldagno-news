@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/services.dart';
 import 'package:html/parser.dart';
+import 'package:iisvaldagno_news/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RssContentLink
@@ -108,7 +109,11 @@ class _NewsState extends State<News> {
                             default: url = Uri.parse("https://www.iisvaldagno.it/tag/${category.value}/"); break;
                           }
 
-                          // TODO: load url response
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Home(url),
+                            ),
+                          );
                         },
                       );
                     }).toList(),
