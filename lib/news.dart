@@ -60,7 +60,7 @@ class _NewsState extends State<News> {
           ),
           body: TabBarView(
             children: [
-              Column(
+              ListView(
                 children: [
                   SelectableText(
                     widget.item.title,
