@@ -61,6 +61,7 @@ class _NewsState extends State<News> {
           body: TabBarView(
             children: [
               ListView(
+                padding: EdgeInsets.all(8),
                 children: [
                   SelectableText(
                     widget.item.title,
