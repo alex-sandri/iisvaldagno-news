@@ -57,6 +57,14 @@ class _NewsState extends State<News> {
                 ),
               ],
             ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.open_in_new),
+                onPressed: () {
+                  // TODO
+                },
+              )
+            ],
           ),
           body: TabBarView(
             children: [
