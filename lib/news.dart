@@ -20,7 +20,7 @@ class _NewsState extends State<News> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "TODO",
+              widget.item.title,
             ),
             bottom: TabBar(
               tabs: [
