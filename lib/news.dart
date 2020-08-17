@@ -134,6 +134,10 @@ class _NewsState extends State<News> {
                                 color: Colors.blue,
                                 decoration: TextDecoration.underline,
                               ),
+                              onTap: () async {
+                                if (await canLaunch(widget.item.link))
+                                  await launch(widget.item.link);
+                              },
                             ),
                           ],
                         ),
