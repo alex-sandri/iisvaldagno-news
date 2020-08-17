@@ -62,6 +62,7 @@ class _NewsState extends State<News> {
             actions: [
               IconButton(
                 icon: Icon(Icons.open_in_new),
+                tooltip: "Apri nel browser",
                 onPressed: () async {
                   if (await canLaunch(widget.item.link))
                     await launch(widget.item.link);
@@ -69,12 +70,14 @@ class _NewsState extends State<News> {
               ),
               IconButton(
                 icon: Icon(Icons.info_outline),
+                tooltip: "Informazioni",
                 onPressed: () async {
                   // TODO
                 },
               ),
               IconButton(
                 icon: Icon(Icons.share),
+                tooltip: "Condividi",
                 onPressed: () async {
                   // TODO
                 },
