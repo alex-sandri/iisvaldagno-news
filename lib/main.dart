@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dart_rss/dart_rss.dart';
-import 'package:http/http.dart' as http;
 import 'package:iisvaldagno_news/news_list.dart';
-import 'package:iisvaldagno_news/news_list_tile.dart';
 import 'package:iisvaldagno_news/search.dart';
 
 void main() {
