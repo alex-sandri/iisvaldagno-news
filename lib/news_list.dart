@@ -58,7 +58,11 @@ class _NewsListState extends State<NewsList> {
       backgroundColor: Colors.blue,
       onRefresh: _handleRefresh,
       child: _items == null
-        ? LinearProgressIndicator()
+        ? Column(
+            children: [
+              LinearProgressIndicator(),
+            ],
+          )
         : ListView.separated(
             separatorBuilder: (context, index) => Divider(),
             itemCount: _items.length + 1,
