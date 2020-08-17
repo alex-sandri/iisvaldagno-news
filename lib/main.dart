@@ -32,44 +32,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _page = 1;
-
-  List<RssItem> _items;
-
-  bool _showLoadMoreButton = true;
-
-  bool _showLoadMoreSpinner = false;
-
-  Future<List<RssItem>> _getItems() async {
-    final http.Response response = await http.get(
-      widget.url?.replaceFirst("{{PAGE}}", _page.toString())
-      ?? "https://www.iisvaldagno.it/page/$_page/?s=&feed=rss2"
-    );
-
-    final RssFeed feed = RssFeed.parse(response.body);
-
-    final List<RssItem> items = feed.items;
-
-    return items;
-  }
-
-  Future<void> _handleRefresh() async {
-    _page = 1;
-
-    final List<RssItem> items = await _getItems();
-
-    if (mounted)
-      setState(() {
-        _items = items;
-      });
-  }
-
-  void initState() {
-    super.initState();
-
-    _handleRefresh();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Material(
