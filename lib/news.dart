@@ -66,7 +66,19 @@ class _NewsState extends State<News> {
                   if (await canLaunch(widget.item.link))
                     await launch(widget.item.link);
                 },
-              )
+              ),
+              IconButton(
+                icon: Icon(Icons.info_outline),
+                onPressed: () async {
+                  // TODO
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () async {
+                  // TODO
+                },
+              ),
             ],
           ),
           body: TabBarView(
