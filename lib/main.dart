@@ -90,12 +90,7 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-        body: RefreshIndicator(
-          color: Colors.white,
-          backgroundColor: Colors.blue,
-          onRefresh: _handleRefresh,
-          child: NewsList()
-        ),
+        body: NewsList(),
       ),
     );
   }
