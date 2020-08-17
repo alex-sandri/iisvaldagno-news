@@ -3,6 +3,7 @@ import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/services.dart';
 import 'package:html/parser.dart';
 import 'package:iisvaldagno_news/main.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RssContentLink
@@ -78,9 +79,7 @@ class _NewsState extends State<News> {
               IconButton(
                 icon: Icon(Icons.share),
                 tooltip: "Condividi",
-                onPressed: () async {
-                  // TODO
-                },
+                onPressed: () => Share.share(widget.item.link),
               ),
             ],
           ),
