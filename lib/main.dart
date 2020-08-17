@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:http/http.dart' as http;
+import 'package:iisvaldagno_news/news_list.dart';
 import 'package:iisvaldagno_news/news_list_tile.dart';
 import 'package:iisvaldagno_news/search.dart';
 
@@ -93,63 +94,7 @@ class _HomeState extends State<Home> {
           color: Colors.white,
           backgroundColor: Colors.blue,
           onRefresh: _handleRefresh,
-          child: _items == null
-            ? LinearProgressIndicator()
-            : ListView.separated(
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: _items.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == _items.length)
-                  {
-                    if (_showLoadMoreSpinner)
-                      return Padding(
-                        padding: EdgeInsets.all(4),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-
-                    if (!_showLoadMoreButton) return Container();
-
-                    return Padding(
-                      padding: EdgeInsets.all(4),
-                      child: FlatButton(
-                        color: Theme.of(context).primaryColor,
-                        padding: EdgeInsets.all(15),
-                        child: Text(
-                          "Carica più elementi",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                        ),
-                        onPressed: () async {
-                          setState(() {
-                            _showLoadMoreButton = false;
-                            _showLoadMoreSpinner = true;
-                          });
-
-                          _page++;
-
-                          final List<RssItem> items = await _getItems();
-
-                          if (mounted)
-                            setState(() {
-                              _items.addAll(items);
-
-                              _showLoadMoreButton = items.isNotEmpty;
-                              _showLoadMoreSpinner = false;
-                            });
-                        },
-                      ),
-                    );
-                  }
-
-                  return NewsListTile(_items[index]);
-                },
-              ),
+          child: NewsList()
         ),
       ),
     );
