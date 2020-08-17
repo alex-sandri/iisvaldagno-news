@@ -3,6 +3,7 @@ import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/services.dart';
 import 'package:html/parser.dart';
 import 'package:iisvaldagno_news/main.dart';
+import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -72,8 +73,69 @@ class _NewsState extends State<News> {
               IconButton(
                 icon: Icon(Icons.info_outline),
                 tooltip: "Informazioni",
-                onPressed: () async {
-                  // TODO
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Informazioni",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Autore",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              widget.item.dc.creator,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "Pubblicato",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              DateFormat
+                                .yMMMMd()
+                                .add_jm()
+                                .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(widget.item.pubDate)),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "Link",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              widget.item.link,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
               IconButton(
