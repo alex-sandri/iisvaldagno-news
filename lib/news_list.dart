@@ -63,6 +63,15 @@ class _NewsListState extends State<NewsList> {
             separatorBuilder: (context, index) => Divider(),
             itemCount: _items.length + 1,
             itemBuilder: (context, index) {
+              if (_items.isEmpty)
+                return Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Text(
+                    "Nessun risultato",
+                    textAlign: TextAlign.center,
+                  ),
+                );
+
               if (index == _items.length)
               {
                 if (_showLoadMoreSpinner)
