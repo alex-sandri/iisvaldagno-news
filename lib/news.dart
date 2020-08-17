@@ -99,7 +99,7 @@ class _NewsState extends State<News> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Text(
+                            SelectableText(
                               widget.item.dc.creator,
                             ),
                             SizedBox(
@@ -112,7 +112,7 @@ class _NewsState extends State<News> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Text(
+                            SelectableText(
                               DateFormat
                                 .yMMMMd()
                                 .add_jm()
@@ -128,7 +128,7 @@ class _NewsState extends State<News> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            Text(
+                            SelectableText(
                               widget.item.link,
                             ),
                           ],
