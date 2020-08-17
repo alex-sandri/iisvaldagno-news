@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:dart_rss/dart_rss.dart';
+import 'package:iisvaldagno_news/news_list.dart';
 import 'package:iisvaldagno_news/news_list_tile.dart';
 
 class Search extends SearchDelegate
@@ -36,39 +37,7 @@ class Search extends SearchDelegate
   
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<http.Response>(
-      future: http.get(Uri.encodeFull("https://www.iisvaldagno.it/?s=$query&feed=rss2")),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return Column(
-            children: [
-              LinearProgressIndicator(),
-            ],
-          );
-
-        final RssFeed feed = RssFeed.parse(snapshot.data.body);
-
-        final List<RssItem> items = feed.items;
-
-        return ListView.builder(
-          itemCount: items.isNotEmpty
-            ? items.length
-            : 1,
-          itemBuilder: (context, index) {
-            if (items.isEmpty)
-              return Padding(
-                padding: EdgeInsets.all(4),
-                child: Text(
-                  "Nessun risultato",
-                  textAlign: TextAlign.center,
-                ),
-              );
-
-            return NewsListTile(items[index]);
-          },
-        );
-      },
-    );
+    return NewsList("https://www.iisvaldagno.it/page/{{PAGE}}/?s=$query&feed=rss2");
   }
   
   @override
