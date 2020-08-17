@@ -130,6 +130,10 @@ class _NewsState extends State<News> {
                             ),
                             SelectableText(
                               widget.item.link,
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           ],
                         ),
