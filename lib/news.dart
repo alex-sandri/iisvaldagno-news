@@ -78,62 +78,58 @@ class _NewsState extends State<News> {
                     context: context,
                     builder: (context) {
                       return Dialog(
-                        child: Padding(
+                        child: ListView(
+                          shrinkWrap: true,
                           padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              
-                              Text(
-                                "Autore",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                          children: [
+                            Text(
+                              "Autore",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
                               ),
-                              SelectableText(
-                                widget.item.dc.creator,
+                            ),
+                            SelectableText(
+                              widget.item.dc.creator,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "Pubblicato",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
                               ),
-                              SizedBox(
-                                height: 8,
+                            ),
+                            SelectableText(
+                              DateFormat
+                                .yMMMMd()
+                                .add_jm()
+                                .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(widget.item.pubDate)),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "Link",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
                               ),
-                              Text(
-                                "Pubblicato",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            ),
+                            SelectableText(
+                              widget.item.link,
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
                               ),
-                              SelectableText(
-                                DateFormat
-                                  .yMMMMd()
-                                  .add_jm()
-                                  .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(widget.item.pubDate)),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                "Link",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SelectableText(
-                                widget.item.link,
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
-                                ),
-                                onTap: () async {
-                                  if (await canLaunch(widget.item.link))
-                                    await launch(widget.item.link);
-                                },
-                              ),
-                            ],
-                          ),
+                              onTap: () async {
+                                if (await canLaunch(widget.item.link))
+                                  await launch(widget.item.link);
+                              },
+                            ),
+                          ],
                         ),
                       );
                     },
