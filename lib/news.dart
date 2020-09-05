@@ -95,6 +95,7 @@ class _NewsState extends State<News> {
                               ),
                             ),
                             ListTile(
+                              isThreeLine: true,
                               title: SelectableText("Link"),
                               subtitle: SelectableText(
                                 widget.item.link,
