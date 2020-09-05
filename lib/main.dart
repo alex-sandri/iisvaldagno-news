@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iisvaldagno_news/news_list.dart';
 import 'package:iisvaldagno_news/search.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,14 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       home: Home(),
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale("it", "IT"),
+      ],
     );
   }
 }
