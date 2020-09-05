@@ -74,72 +74,66 @@ class _NewsState extends State<News> {
                 icon: Icon(Icons.info_outline),
                 tooltip: "Informazioni",
                 onPressed: () {
-                  showModalBottomSheet(
+                  showDialog(
                     context: context,
                     builder: (context) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Informazioni",
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
+                      return Dialog(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              
+                              Text(
+                                "Autore",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Text(
-                              "Autore",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                              SelectableText(
+                                widget.item.dc.creator,
                               ),
-                            ),
-                            SelectableText(
-                              widget.item.dc.creator,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "Pubblicato",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                              SizedBox(
+                                height: 8,
                               ),
-                            ),
-                            SelectableText(
-                              DateFormat
-                                .yMMMMd()
-                                .add_jm()
-                                .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(widget.item.pubDate)),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "Link",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                "Pubblicato",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            SelectableText(
-                              widget.item.link,
-                              style: TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
+                              SelectableText(
+                                DateFormat
+                                  .yMMMMd()
+                                  .add_jm()
+                                  .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(widget.item.pubDate)),
                               ),
-                              onTap: () async {
-                                if (await canLaunch(widget.item.link))
-                                  await launch(widget.item.link);
-                              },
-                            ),
-                          ],
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "Link",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SelectableText(
+                                widget.item.link,
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                onTap: () async {
+                                  if (await canLaunch(widget.item.link))
+                                    await launch(widget.item.link);
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
