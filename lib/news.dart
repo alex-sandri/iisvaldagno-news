@@ -80,7 +80,6 @@ class _NewsState extends State<News> {
                       return Dialog(
                         child: ListView(
                           shrinkWrap: true,
-                          padding: const EdgeInsets.all(8.0),
                           children: [
                             ListTile(
                               title: SelectableText("Autore"),
