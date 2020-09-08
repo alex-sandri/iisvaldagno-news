@@ -76,24 +76,24 @@ class _NewsListState extends State<NewsList> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      color: Colors.white,
-      backgroundColor: Colors.blue,
-      onRefresh: _handleRefresh,
-      child: _items == null
-        ? Column(
-            children: [
-              LinearProgressIndicator(),
-            ],
-          )
-        : NotificationListener<ScrollNotification>(
-            onNotification: (scrollNotification) {
-              if (scrollNotification.metrics.extentAfter == 0)
-                _loadMore();
+    return NotificationListener<ScrollNotification>(
+      onNotification: (scrollNotification) {
+        if (scrollNotification.metrics.extentAfter == 0)
+        _loadMore();
 
-              return true;
-            },
-            child: ListView.separated(
+        return true;
+      },
+      child: RefreshIndicator(
+        color: Colors.white,
+        backgroundColor: Colors.blue,
+        onRefresh: _handleRefresh,
+        child: _items == null
+          ? Column(
+              children: [
+                LinearProgressIndicator(),
+              ],
+            )
+          : ListView.separated(
               separatorBuilder: (context, index) => Divider(),
               itemCount: _items.length + 1,
               itemBuilder: (context, index) {
@@ -138,7 +138,7 @@ class _NewsListState extends State<NewsList> {
                 return NewsListTile(_items[index]);
               },
             ),
-        ),
+      ),
     );
   }
 }
