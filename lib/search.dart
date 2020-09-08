@@ -17,6 +17,7 @@ class Search extends SearchDelegate
     return [
       IconButton(
         icon: Icon(Icons.close),
+        tooltip: "Cancella",
         onPressed: () {
           query = "";
         },
@@ -28,6 +29,7 @@ class Search extends SearchDelegate
   Widget buildLeading(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.arrow_back),
+      tooltip: "Indietro",
       onPressed: () => Navigator.of(context).pop(),
     );
   }

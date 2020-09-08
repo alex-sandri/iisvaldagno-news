@@ -49,6 +49,7 @@ class _HomeState extends State<Home> {
           actions: [
             IconButton(
               icon: Icon(Icons.search),
+              tooltip: "Cerca",
               onPressed: () {
                 showSearch(
                   context: context,
