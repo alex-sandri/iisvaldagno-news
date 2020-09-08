@@ -88,39 +88,37 @@ class _NewsListState extends State<NewsList> {
 
                 if (!_showLoadMoreButton) return Container();
 
-                return Padding(
-                  padding: EdgeInsets.all(4),
-                  child: FlatButton(
-                    color: Theme.of(context).primaryColor,
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      "Carica più elementi",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                return FlatButton(
+                  color: Theme.of(context).primaryColor,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  padding: EdgeInsets.all(15),
+                  child: Text(
+                    "Carica più elementi",
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    onPressed: () async {
-                      setState(() {
-                        _showLoadMoreButton = false;
-                        _showLoadMoreSpinner = true;
-                      });
-
-                      _page++;
-
-                      final List<RssItem> items = await _getItems();
-
-                      if (mounted)
-                        setState(() {
-                          _items.addAll(items);
-
-                          _showLoadMoreButton = items.isNotEmpty;
-                          _showLoadMoreSpinner = false;
-                        });
-                    },
                   ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                  onPressed: () async {
+                    setState(() {
+                      _showLoadMoreButton = false;
+                      _showLoadMoreSpinner = true;
+                    });
+
+                    _page++;
+
+                    final List<RssItem> items = await _getItems();
+
+                    if (mounted)
+                      setState(() {
+                        _items.addAll(items);
+
+                        _showLoadMoreButton = items.isNotEmpty;
+                        _showLoadMoreSpinner = false;
+                      });
+                  },
                 );
               }
 
