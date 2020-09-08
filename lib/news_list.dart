@@ -19,8 +19,6 @@ class _NewsListState extends State<NewsList> {
 
   bool _showLoadMoreButton = true;
 
-  bool _showLoadMoreSpinner = false;
-
   Future<List<RssItem>> _getItems() async {
     final http.Response response = await http.get(
       widget.url?.replaceFirst("{{PAGE}}", _page.toString())
@@ -54,7 +52,6 @@ class _NewsListState extends State<NewsList> {
       _loading = true;
 
       _showLoadMoreButton = false;
-      _showLoadMoreSpinner = true;
     });
 
     _page++;
@@ -66,7 +63,6 @@ class _NewsListState extends State<NewsList> {
         _items.addAll(items);
 
         _showLoadMoreButton = items.isNotEmpty;
-        _showLoadMoreSpinner = false;
 
         _loading = false;
       });
@@ -112,7 +108,7 @@ class _NewsListState extends State<NewsList> {
 
                 if (index == _items.length)
                 {
-                  if (_showLoadMoreSpinner)
+                  if (_loading)
                     return Padding(
                       padding: EdgeInsets.all(4),
                       child: Center(
