@@ -14,6 +14,7 @@ class NewsListTile extends StatelessWidget {
     return ListTile(
       trailing: IconButton(
         icon: Icon(Icons.open_in_new),
+        tooltip: "Apri nel browser",
         onPressed: () async {
           if (await canLaunch(item.link))
             await launch(item.link);
