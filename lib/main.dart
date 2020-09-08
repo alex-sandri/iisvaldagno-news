@@ -73,7 +73,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.url);
     return Material(
       child: Scaffold(
         appBar: AppBar(
