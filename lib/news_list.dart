@@ -45,8 +45,14 @@ class _NewsListState extends State<NewsList> {
       });
   }
 
+  bool _loading = false;
+
   Future<void> _loadMore() async {
+    if (_loading) return;
+
     setState(() {
+      _loading = true;
+
       _showLoadMoreButton = false;
       _showLoadMoreSpinner = true;
     });
@@ -61,6 +67,8 @@ class _NewsListState extends State<NewsList> {
 
         _showLoadMoreButton = items.isNotEmpty;
         _showLoadMoreSpinner = false;
+
+        _loading = false;
       });
   }
 
