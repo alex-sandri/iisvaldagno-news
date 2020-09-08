@@ -82,51 +82,59 @@ class _NewsListState extends State<NewsList> {
               LinearProgressIndicator(),
             ],
           )
-        : ListView.separated(
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: _items.length + 1,
-            itemBuilder: (context, index) {
-              if (_items.isEmpty)
-                return Padding(
-                  padding: EdgeInsets.all(4),
-                  child: Text(
-                    "Nessun risultato",
-                    textAlign: TextAlign.center,
-                  ),
-                );
+        : NotificationListener<ScrollNotification>(
+            onNotification: (scrollNotification) {
+              if (scrollNotification.metrics.extentAfter == 0)
+                _loadMore();
 
-              if (index == _items.length)
-              {
-                if (_showLoadMoreSpinner)
+              return true;
+            },
+            child: ListView.separated(
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: _items.length + 1,
+              itemBuilder: (context, index) {
+                if (_items.isEmpty)
                   return Padding(
                     padding: EdgeInsets.all(4),
-                    child: Center(
-                      child: CircularProgressIndicator(),
+                    child: Text(
+                      "Nessun risultato",
+                      textAlign: TextAlign.center,
                     ),
                   );
 
-                if (!_showLoadMoreButton) return Container();
+                if (index == _items.length)
+                {
+                  if (_showLoadMoreSpinner)
+                    return Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
 
-                return FlatButton(
-                  color: Theme.of(context).primaryColor,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  padding: EdgeInsets.all(15),
-                  child: Text(
-                    "Carica più elementi",
-                    style: TextStyle(
-                      color: Colors.white,
+                  if (!_showLoadMoreButton) return Container();
+
+                  return FlatButton(
+                    color: Theme.of(context).primaryColor,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      "Carica più elementi",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  onPressed: _loadMore,
-                );
-              }
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    onPressed: _loadMore,
+                  );
+                }
 
-              return NewsListTile(_items[index]);
-            },
-          ),
+                return NewsListTile(_items[index]);
+              },
+            ),
+        ),
     );
   }
 }
