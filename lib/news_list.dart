@@ -45,6 +45,25 @@ class _NewsListState extends State<NewsList> {
       });
   }
 
+  Future<void> _loadMore() async {
+    setState(() {
+      _showLoadMoreButton = false;
+      _showLoadMoreSpinner = true;
+    });
+
+    _page++;
+
+    final List<RssItem> items = await _getItems();
+
+    if (mounted)
+      setState(() {
+        _items.addAll(items);
+
+        _showLoadMoreButton = items.isNotEmpty;
+        _showLoadMoreSpinner = false;
+      });
+  }
+
   void initState() {
     super.initState();
 
@@ -101,24 +120,7 @@ class _NewsListState extends State<NewsList> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.zero,
                   ),
-                  onPressed: () async {
-                    setState(() {
-                      _showLoadMoreButton = false;
-                      _showLoadMoreSpinner = true;
-                    });
-
-                    _page++;
-
-                    final List<RssItem> items = await _getItems();
-
-                    if (mounted)
-                      setState(() {
-                        _items.addAll(items);
-
-                        _showLoadMoreButton = items.isNotEmpty;
-                        _showLoadMoreSpinner = false;
-                      });
-                  },
+                  onPressed: _loadMore,
                 );
               }
 
