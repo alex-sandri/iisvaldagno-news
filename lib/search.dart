@@ -27,9 +27,7 @@ class Search extends SearchDelegate
   
   @override
   Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      tooltip: "Indietro",
+    return BackButton(
       onPressed: () => Navigator.of(context).pop(),
     );
   }
