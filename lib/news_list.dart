@@ -79,7 +79,7 @@ class _NewsListState extends State<NewsList> {
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollNotification) {
         if (scrollNotification.metrics.extentAfter == 0)
-        _loadMore();
+          _loadMore();
 
         return true;
       },
