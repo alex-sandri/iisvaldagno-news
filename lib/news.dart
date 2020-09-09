@@ -24,10 +24,28 @@ class News extends StatefulWidget {
   News(this.item);
 
   static const Map<String, String> _categories = {
-    "Notizie in evidenza": "https://www.iisvaldagno.it/categorie/news",
-    "In evidenza ITI": "https://www.iisvaldagno.it/categorie/news/iti-news",
-    "In evidenza ITE": "https://www.iisvaldagno.it/categorie/news/ite-news",
-    "In evidenza IP": "https://www.iisvaldagno.it/categorie/news/ip-news",
+    "Notizie in evidenza": "https://www.iisvaldagno.it/categorie/news/",
+    "In evidenza ITI": "https://www.iisvaldagno.it/categorie/news/iti-news/",
+    "In evidenza ITE": "https://www.iisvaldagno.it/categorie/news/ite-news/",
+    "In evidenza IP": "https://www.iisvaldagno.it/categorie/news/ip-news/",
+    "Bacheca esperienze e premi": "https://www.iisvaldagno.it/categorie/bacheca/",
+    "Bacheca esperienze e premi ITI": "https://www.iisvaldagno.it/categorie/bacheca/iti-bacheca/",
+    "Bacheca esperienze e premi ITE": "https://www.iisvaldagno.it/categorie/bacheca/ite-bacheca/",
+    "Bacheca esperienze e premi IP": "https://www.iisvaldagno.it/categorie/bacheca/ip-bacheca/",
+    // ITI
+    "Chimica": "https://www.iisvaldagno.it/categorie/iti/iti-chimica/",
+    "Elettronica": "https://www.iisvaldagno.it/categorie/iti/iti-elettronica/",
+    "Informatica": "https://www.iisvaldagno.it/categorie/iti/iti-informatica/",
+    "Meccanica e meccatronica": "https://www.iisvaldagno.it/categorie/iti/iti-meccanica/",
+    "Moda": "https://www.iisvaldagno.it/categorie/iti/iti-moda/",
+    // ITE
+    "Amministrazione, finanza e marketing": "https://www.iisvaldagno.it/categorie/ite/ite-afm/",
+    "Sistemi informativi": "https://www.iisvaldagno.it/categorie/ite/ite-sistemi-informativi/",
+    "Turismo": "https://www.iisvaldagno.it/categorie/ite/ite-turismo/",
+    // IP
+    "Gestione delle acque": "https://www.iisvaldagno.it/categorie/ip/ip-gestione-acque/",
+    "Manutenzione e assistenza tecnica": "https://www.iisvaldagno.it/categorie/ip/ip-manutenzione/",
+    "Servizi per la Sanità e l’Assistenza Sociale": "https://www.iisvaldagno.it/categorie/ip/ip-socio-sanitario/",
   };
 
   @override
