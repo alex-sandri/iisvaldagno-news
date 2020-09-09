@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iisvaldagno_news/news.dart';
 import 'package:iisvaldagno_news/news_list.dart';
 import 'package:iisvaldagno_news/search.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -101,12 +102,18 @@ class _HomeState extends State<Home> {
           ? NewsList(widget.url)
           : ListView.separated(
               separatorBuilder: (context, index) => Divider(),
-              itemCount: 1,
+              itemCount: News.categories.length,
               itemBuilder: (context, index) {
+                MapEntry<String, String> category = News.categories.entries.elementAt(index);
+
                 return ListTile(
-                  title: Text("TODO"),
+                  title: Text(category.key),
                   onTap: () {
-                    // TODO
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Home(category.value),
+                      ),
+                    );
                   },
                 );
               },
