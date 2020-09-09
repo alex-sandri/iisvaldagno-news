@@ -23,6 +23,10 @@ class News extends StatefulWidget {
 
   News(this.item);
 
+  static const Map<String, String> _categories = {
+    // TODO
+  };
+
   @override
   _NewsState createState() => _NewsState();
 }
@@ -166,7 +170,7 @@ class _NewsState extends State<News> {
                             case "In evidenza ITI": url = "https://www.iisvaldagno.it/categorie/news/iti-news"; break;
                             case "In evidenza ITE": url = "https://www.iisvaldagno.it/categorie/news/ite-news"; break;
                             case "In evidenza IP": url = "https://www.iisvaldagno.it/categorie/news/ip-news"; break;
-                            default: url = "https://www.iisvaldagno.it/tag/${category.value}"; break;
+                            default: url = News._categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}"; break;
                           }
 
                           url += "/page/{{PAGE}}/?feed=rss2";
