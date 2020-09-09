@@ -39,6 +39,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -106,6 +108,12 @@ class _HomeState extends State<Home> {
               title: Text("Categorie"),
             ),
           ],
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
         ),
       ),
     );
