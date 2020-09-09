@@ -39,6 +39,8 @@ class _NewsState extends State<News> {
         text: element.text,
         url: Uri.parse(element.attributes["href"]),
       ));
+
+      element.remove();
     });
 
     return Material(
