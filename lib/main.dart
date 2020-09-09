@@ -56,6 +56,8 @@ class _HomeState extends State<Home> {
         case "action_evidenza_ip": url = "https://www.iisvaldagno.it/categorie/news/ip-news"; break;
       }
 
+      url += "/page/{{PAGE}}/?feed=rss2";
+
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => Home(url),
