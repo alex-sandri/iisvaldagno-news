@@ -84,19 +84,22 @@ class _HomeState extends State<Home> {
             "IIS Valdagno News",
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              tooltip: "Cerca",
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: Search()
-                );
-              },
-            )
+            if (_currentIndex == 0)
+              IconButton(
+                icon: Icon(Icons.search),
+                tooltip: "Cerca",
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: Search()
+                  );
+                },
+              ),
           ],
         ),
-        body: NewsList(widget.url),
+        body: _currentIndex == 0
+          ? NewsList(widget.url)
+          : Container(),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
