@@ -99,7 +99,18 @@ class _HomeState extends State<Home> {
         ),
         body: _currentIndex == 0
           ? NewsList(widget.url)
-          : Container(),
+          : ListView.separated(
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text("TODO"),
+                  onTap: () {
+                    // TODO
+                  },
+                );
+              },
+            ),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
