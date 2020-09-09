@@ -185,7 +185,7 @@ class _NewsState extends State<News> {
                     height: 8,
                   ),
                   SelectableText(
-                    parse(widget.item.content.value).body.text,
+                    document.body.text,
                   ),
                 ],
               ),
