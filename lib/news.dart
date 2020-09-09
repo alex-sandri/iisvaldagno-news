@@ -93,7 +93,11 @@ class _NewsState extends State<News> {
                                 DateFormat
                                   .yMMMMd()
                                   .add_jm()
-                                  .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(widget.item.pubDate)),
+                                  .format(
+                                    DateFormat("E, dd MMM yyyy HH:mm:ss zzz")
+                                      .parse(widget.item.pubDate)
+                                      .add(Duration(hours: 2))
+                                  ),
                               ),
                             ),
                             ListTile(

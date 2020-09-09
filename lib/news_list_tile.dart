@@ -29,7 +29,11 @@ class NewsListTile extends StatelessWidget {
         DateFormat
           .yMMMMd()
           .add_jm()
-          .format(DateFormat("E, dd MMM yyyy HH:mm:ss zzz").parse(item.pubDate)),
+          .format(
+            DateFormat("E, dd MMM yyyy HH:mm:ss zzz")
+              .parse(item.pubDate)
+              .add(Duration(hours: 2))
+          ),
       ),
       onTap: () {
         Navigator.of(context).push(
