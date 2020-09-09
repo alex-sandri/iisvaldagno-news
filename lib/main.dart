@@ -66,10 +66,10 @@ class _HomeState extends State<Home> {
     });
 
     quickActions.setShortcutItems([
-      const ShortcutItem(type: "action_evidenza", localizedTitle: "Notizie in evidenza"),
-      const ShortcutItem(type: "action_evidenza_iti", localizedTitle: "In evidenza ITI"),
-      const ShortcutItem(type: "action_evidenza_ite", localizedTitle: "In evidenza ITE"),
-      const ShortcutItem(type: "action_evidenza_ip", localizedTitle: "In evidenza IP"),
+      const ShortcutItem(type: "action_evidenza", localizedTitle: "Notizie in evidenza", icon: "ic_launcher"),
+      const ShortcutItem(type: "action_evidenza_iti", localizedTitle: "In evidenza ITI", icon: "ic_launcher"),
+      const ShortcutItem(type: "action_evidenza_ite", localizedTitle: "In evidenza ITE", icon: "ic_launcher"),
+      const ShortcutItem(type: "action_evidenza_ip", localizedTitle: "In evidenza IP", icon: "ic_launcher"),
     ]);
   }
 
