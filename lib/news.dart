@@ -23,7 +23,7 @@ class News extends StatefulWidget {
 
   News(this.item);
 
-  static const Map<String, String> _categories = {
+  static const Map<String, String> categories = {
     "Notizie in evidenza": "https://www.iisvaldagno.it/categorie/news/",
     "In evidenza ITI": "https://www.iisvaldagno.it/categorie/news/iti-news/",
     "In evidenza ITE": "https://www.iisvaldagno.it/categorie/news/ite-news/",
@@ -183,7 +183,7 @@ class _NewsState extends State<News> {
                             )
                           : null,
                         onPressed: () {
-                          String url = News._categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}";
+                          String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}";
 
                           url += "/page/{{PAGE}}/?feed=rss2";
 
