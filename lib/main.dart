@@ -95,6 +95,18 @@ class _HomeState extends State<Home> {
           ],
         ),
         body: NewsList(widget.url),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.rss_feed),
+              title: Text("Feed"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.category),
+              title: Text("Categorie"),
+            ),
+          ],
+        ),
       ),
     );
   }
