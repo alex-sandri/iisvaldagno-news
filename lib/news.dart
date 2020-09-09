@@ -23,29 +23,33 @@ class News extends StatefulWidget {
 
   News(this.item);
 
+  static const String _baseUrl = "https://www.iisvaldagno.it";
+
+  static const String _urlSuffix = "/page/{{PAGE}}/?feed=rss2";
+
   static const Map<String, String> categories = {
-    "Notizie in evidenza": "https://www.iisvaldagno.it/categorie/news/",
-    "In evidenza ITI": "https://www.iisvaldagno.it/categorie/news/iti-news/",
-    "In evidenza ITE": "https://www.iisvaldagno.it/categorie/news/ite-news/",
-    "In evidenza IP": "https://www.iisvaldagno.it/categorie/news/ip-news/",
-    "Bacheca esperienze e premi": "https://www.iisvaldagno.it/categorie/bacheca/",
-    "Bacheca esperienze e premi ITI": "https://www.iisvaldagno.it/categorie/bacheca/iti-bacheca/",
-    "Bacheca esperienze e premi ITE": "https://www.iisvaldagno.it/categorie/bacheca/ite-bacheca/",
-    "Bacheca esperienze e premi IP": "https://www.iisvaldagno.it/categorie/bacheca/ip-bacheca/",
+    "Notizie in evidenza": "$_baseUrl/categorie/news/$_urlSuffix",
+    "In evidenza ITI": "$_baseUrl/categorie/news/iti-news/$_urlSuffix",
+    "In evidenza ITE": "$_baseUrl/categorie/news/ite-news/$_urlSuffix",
+    "In evidenza IP": "$_baseUrl/categorie/news/ip-news/$_urlSuffix",
+    "Bacheca esperienze e premi": "$_baseUrl/categorie/bacheca/$_urlSuffix",
+    "Bacheca esperienze e premi ITI": "$_baseUrl/categorie/bacheca/iti-bacheca/$_urlSuffix",
+    "Bacheca esperienze e premi ITE": "$_baseUrl/categorie/bacheca/ite-bacheca/$_urlSuffix",
+    "Bacheca esperienze e premi IP": "$_baseUrl/categorie/bacheca/ip-bacheca/$_urlSuffix",
     // ITI
-    "Chimica": "https://www.iisvaldagno.it/categorie/iti/iti-chimica/",
-    "Elettronica": "https://www.iisvaldagno.it/categorie/iti/iti-elettronica/",
-    "Informatica": "https://www.iisvaldagno.it/categorie/iti/iti-informatica/",
-    "Meccanica e meccatronica": "https://www.iisvaldagno.it/categorie/iti/iti-meccanica/",
-    "Moda": "https://www.iisvaldagno.it/categorie/iti/iti-moda/",
+    "Chimica": "$_baseUrl/categorie/iti/iti-chimica/$_urlSuffix",
+    "Elettronica": "$_baseUrl/categorie/iti/iti-elettronica/$_urlSuffix",
+    "Informatica": "$_baseUrl/categorie/iti/iti-informatica/$_urlSuffix",
+    "Meccanica e meccatronica": "$_baseUrl/categorie/iti/iti-meccanica/$_urlSuffix",
+    "Moda": "$_baseUrl/categorie/iti/iti-moda/",
     // ITE
-    "Amministrazione, finanza e marketing": "https://www.iisvaldagno.it/categorie/ite/ite-afm/",
-    "Sistemi informativi": "https://www.iisvaldagno.it/categorie/ite/ite-sistemi-informativi/",
-    "Turismo": "https://www.iisvaldagno.it/categorie/ite/ite-turismo/",
+    "Amministrazione, finanza e marketing": "$_baseUrl/categorie/ite/ite-afm/$_urlSuffix",
+    "Sistemi informativi": "$_baseUrl/categorie/ite/ite-sistemi-informativi/$_urlSuffix",
+    "Turismo": "$_baseUrl/categorie/ite/ite-turismo/$_urlSuffix",
     // IP
-    "Gestione delle acque": "https://www.iisvaldagno.it/categorie/ip/ip-gestione-acque/",
-    "Manutenzione e assistenza tecnica": "https://www.iisvaldagno.it/categorie/ip/ip-manutenzione/",
-    "Servizi per la Sanità e l’Assistenza Sociale": "https://www.iisvaldagno.it/categorie/ip/ip-socio-sanitario/",
+    "Gestione delle acque": "$_baseUrl/categorie/ip/ip-gestione-acque/$_urlSuffix",
+    "Manutenzione e assistenza tecnica": "$_baseUrl/categorie/ip/ip-manutenzione/$_urlSuffix",
+    "Servizi per la Sanità e l’Assistenza Sociale": "$_baseUrl/categorie/ip/ip-socio-sanitario/$_urlSuffix",
   };
 
   @override
@@ -183,9 +187,7 @@ class _NewsState extends State<News> {
                             )
                           : null,
                         onPressed: () {
-                          String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}";
-
-                          url += "/page/{{PAGE}}/?feed=rss2";
+                          String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}/page/{{PAGE}}/?feed=rss2";
 
                           Navigator.of(context).push(
                             MaterialPageRoute(
