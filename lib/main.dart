@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
             )
           ],
         ),
-        body: NewsList(),
+        body: NewsList(widget.url),
       ),
     );
   }
