@@ -211,7 +211,7 @@ class _NewsState extends State<News> {
                     height: 8,
                   ),
                   SelectableLinkify(
-                    text: document.body.text,
+                    text: document.body.text.trim(),
                     onOpen: (link) async {
                       if (await canLaunch(link.url)) await launch(link.url);
                     },
