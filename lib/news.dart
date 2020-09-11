@@ -249,7 +249,7 @@ class _NewsState extends State<News> {
                     },
                     onLongPress: () async {
                       await Clipboard.setData(ClipboardData(
-                        text: link.text,
+                        text: link.url.toString(),
                       ));
 
                       Scaffold.of(context).showSnackBar(SnackBar(
