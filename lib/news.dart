@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:html/parser.dart';
 import 'package:iisvaldagno_news/main.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:html/dom.dart' as dom;
 
 class RssContentLink
 {
@@ -69,7 +71,7 @@ class _NewsState extends State<News> {
         url: Uri.parse(element.attributes["href"]),
       ));
 
-      element.remove();
+      element.replaceWith(dom.Element.tag("p")..text = element.attributes["href"]);
     });
 
     return Material(
@@ -208,8 +210,8 @@ class _NewsState extends State<News> {
                   SizedBox(
                     height: 8,
                   ),
-                  SelectableText(
-                    document.body.text,
+                  SelectableLinkify(
+                    text: document.body.text,
                   ),
                 ],
               ),
