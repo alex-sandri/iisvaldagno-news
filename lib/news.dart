@@ -71,7 +71,7 @@ class _NewsState extends State<News> {
         url: Uri.parse(element.attributes["href"]),
       ));
 
-      element.replaceWith(dom.Element.tag("p")..text = element.attributes["href"]);
+      element.replaceWith(dom.Element.tag("p")..text = "${element.text}:\n${element.attributes["href"]}\n");
     });
 
     return Material(
