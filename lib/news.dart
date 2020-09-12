@@ -295,7 +295,13 @@ class _NewsState extends State<News> {
             opacity: _opacity,
             duration: Duration(milliseconds: 100),
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                // TODO
+
+                Scaffold
+                  .of(context)
+                  .showSnackBar(SnackBar(content: Text("'${widget.item.title}' aggiunto ai preferiti")));
+              },
               tooltip: "Aggiungi ai preferiti",
               child: Icon(Icons.favorite_border),
             ),
