@@ -155,6 +155,8 @@ class _HomeState extends State<Home> {
                       key: ValueKey(news),
                       onDismissed: (direction) async {
                         await FavoritesManager.delete(news);
+
+                        setState(() {});
                       },
                       background: Container(
                         color: Colors.red,
