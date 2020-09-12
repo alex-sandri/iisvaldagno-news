@@ -153,8 +153,8 @@ class _HomeState extends State<Home> {
 
                     return Dismissible(
                       key: ValueKey(news),
-                      onDismissed: (direction) {
-                        FavoritesManager.delete(news);
+                      onDismissed: (direction) async {
+                        await FavoritesManager.delete(news);
                       },
                       child: NewsListTile(news.toRssItem()),
                     );
