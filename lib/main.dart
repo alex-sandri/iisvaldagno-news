@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:iisvaldagno_news/favorites_manager.dart';
+import 'package:iisvaldagno_news/models/SerializableNews.dart';
 import 'package:iisvaldagno_news/news.dart';
 import 'package:iisvaldagno_news/news_list.dart';
 import 'package:iisvaldagno_news/search.dart';
@@ -10,6 +11,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter();
+
+  Hive.registerAdapter(SerializableNewsAdapter());
 
   await FavoritesManager.initialize();
 
