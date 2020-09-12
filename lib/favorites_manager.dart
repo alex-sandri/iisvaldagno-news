@@ -1,15 +1,16 @@
 import 'package:hive/hive.dart';
+import 'package:iisvaldagno_news/serializable_news.dart';
 
 class FavoritesManager
 {
   static Box _box;
 
-  static List<dynamic> getAll() => _box.get("list");
+  static List<SerializableNews> getAll() => _box.get("list");
 
-  static Future<void> add(dynamic value) => _box.put("list", [ ...getAll(), value ]);
+  static Future<void> add(SerializableNews value) => _box.put("list", [ ...getAll(), value ]);
 
-  static Future<void> delete(dynamic value) async {
-    final List<dynamic> favorites = getAll();
+  static Future<void> delete(SerializableNews value) async {
+    final List<SerializableNews> favorites = getAll();
 
     favorites.remove(value);
 
