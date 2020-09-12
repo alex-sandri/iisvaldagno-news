@@ -39,7 +39,7 @@ class SerializableNews
     title: title,
     link: link,
     content: RssContent(content, []),
-    categories: categories.map<RssCategory>((category) => RssCategory("DOMAIN", category)),
+    categories: categories.map<RssCategory>((category) => RssCategory("DOMAIN", category)).toList(),
     dc: DublinCore(
       creator: creator,
     ),
@@ -50,7 +50,7 @@ class SerializableNews
     title: rssItem.title,
     link: rssItem.link,
     content: rssItem.content.value,
-    categories: rssItem.categories.map<String>((category) => category.value),
+    categories: rssItem.categories.map<String>((category) => category.value).toList(),
     creator: rssItem.dc.creator,
     pubDate: rssItem.pubDate,
   );
