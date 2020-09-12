@@ -14,7 +14,7 @@ class FavoritesManager
 
     favorites.remove(value);
 
-    await _box.put("list", getAll());
+    await _box.put("list", favorites);
   }
 
   static Future<void> empty() async {
