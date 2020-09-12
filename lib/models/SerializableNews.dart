@@ -55,4 +55,9 @@ class SerializableNews
     creator: rssItem.dc.creator,
     pubDate: rssItem.pubDate,
   );
+
+  bool operator ==(Object other) => other is SerializableNews && other.link == link;
+
+  @override
+  int get hashCode => super.hashCode;
 }
