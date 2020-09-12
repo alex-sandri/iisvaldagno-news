@@ -149,7 +149,15 @@ class _HomeState extends State<Home> {
                         textAlign: TextAlign.center,
                       );
 
-                    return NewsListTile(FavoritesManager.getAll()[index].toRssItem());
+                    final SerializableNews news = FavoritesManager.getAll()[index];
+
+                    return Dismissible(
+                      key: ValueKey(news),
+                      onDismissed: (direction) {
+                        FavoritesManager.delete(news);
+                      },
+                      child: NewsListTile(news.toRssItem()),
+                    );
                   },
                 );
                 break;
