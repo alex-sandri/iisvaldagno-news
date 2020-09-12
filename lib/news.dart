@@ -95,6 +95,15 @@ class _NewsState extends State<News> {
         .join(". ")
         .trim());
 
+    document.querySelectorAll("em").forEach((element) =>
+      element.text =
+        element
+        .text
+        .split(".")
+        .map((phrase) => phrase = phrase.trim().isEmpty ? "" : "*${phrase.trim()}*")
+        .join(". ")
+        .trim());
+
     document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
     return Material(
