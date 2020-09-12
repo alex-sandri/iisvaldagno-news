@@ -78,6 +78,7 @@ class _NewsState extends State<News> {
         url: Uri.parse(element.attributes["href"]),
       ));
 
+      // Remove download count
       element.querySelector("span.badge").remove();
 
       element.text = "[${element.text}](${element.attributes["href"]})";
