@@ -156,6 +156,13 @@ class _HomeState extends State<Home> {
                       onDismissed: (direction) async {
                         await FavoritesManager.delete(news);
                       },
+                      background: Container(
+                        color: Colors.red,
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                      ),
                       child: NewsListTile(news.toRssItem()),
                     );
                   },
