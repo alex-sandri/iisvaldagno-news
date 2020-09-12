@@ -78,16 +78,12 @@ class _NewsState extends State<News> {
         url: Uri.parse(element.attributes["href"]),
       ));
 
-      element.replaceWith(dom.Element.tag("span")..text = "[${element.text}](${element.attributes["href"]})");
+      element.text = "[${element.text}](${element.attributes["href"]})";
     });
 
-    document.querySelectorAll("ul > li").forEach((element) {
-      element.replaceWith(dom.Element.tag("span")..text = " - ${element.text}");
-    });
+    document.querySelectorAll("ul > li").forEach((element) => element.text = " - ${element.text}");
 
-    document.querySelectorAll("strong").forEach((element) {
-      element.replaceWith(dom.Element.tag("span")..text = "**${element.text}**");
-    });
+    document.querySelectorAll("strong").forEach((element) => element.text = "**${element.text}**");
 
     document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
