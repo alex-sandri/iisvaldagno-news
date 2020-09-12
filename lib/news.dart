@@ -10,7 +10,6 @@ import 'package:iisvaldagno_news/models/SerializableNews.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:html/dom.dart' as dom;
 
 class RssContentLink
 {
