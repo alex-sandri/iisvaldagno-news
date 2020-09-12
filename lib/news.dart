@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html/parser.dart';
 import 'package:iisvaldagno_news/main.dart';
 import 'package:intl/intl.dart';
@@ -71,8 +72,14 @@ class _NewsState extends State<News> {
         url: Uri.parse(element.attributes["href"]),
       ));
 
-      element.replaceWith(dom.Element.tag("p")..text = "${element.text}:\n${element.attributes["href"]}\n");
+      element.replaceWith(dom.Element.tag("span")..text = "[${element.text}](${element.attributes["href"]})");
     });
+
+    document.querySelectorAll("ul > li").forEach((element) {
+      element.replaceWith(dom.Element.tag("span")..text = " - ${element.text}");
+    });
+
+    document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
     return Material(
       child: DefaultTabController(
@@ -210,11 +217,14 @@ class _NewsState extends State<News> {
                   SizedBox(
                     height: 8,
                   ),
-                  SelectableLinkify(
-                    text: document.body.text.trim(),
-                    options: LinkifyOptions(humanize: false),
-                    onOpen: (link) async {
-                      if (await canLaunch(link.url)) await launch(link.url);
+                  Markdown(
+                    data: document.body.text.trim(),
+                    selectable: true,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    onTapLink: (url) async {
+                      if (await canLaunch(url)) await launch(url);
                     },
                   ),
                 ],
