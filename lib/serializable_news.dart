@@ -3,7 +3,6 @@ import 'package:dart_rss/domain/dublin_core/dublin_core.dart';
 import 'package:dart_rss/domain/rss_content.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 @HiveType(typeId: 0)
 class SerializableNews
