@@ -24,7 +24,7 @@ class SerializableNews
   final String creator;
 
   @HiveField(5)
-  final DateTime pubDate;
+  final String pubDate;
 
   SerializableNews({
     @required this.title,
@@ -43,10 +43,15 @@ class SerializableNews
     dc: DublinCore(
       creator: creator,
     ),
-    pubDate: DateFormat("E, dd MMM yyyy HH:mm:ss zzz")
-      .format(pubDate.subtract(Duration(hours: 2))) // UTC+0
-      .toString(),
+    pubDate: pubDate,
   );
 
-  static SerializableNews fromRssItem(RssItem rssItem) => null;
+  static SerializableNews fromRssItem(RssItem rssItem) => SerializableNews(
+    title: rssItem.title,
+    link: rssItem.link,
+    content: rssItem.content.value,
+    categories: rssItem.categories.map<String>((category) => category.value),
+    creator: rssItem.dc.creator,
+    pubDate: rssItem.pubDate,
+  );
 }
