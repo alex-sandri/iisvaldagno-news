@@ -4,6 +4,8 @@ import 'package:dart_rss/domain/rss_content.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+part 'SerializableNews.g.dart';
+
 @HiveType(typeId: 0)
 class SerializableNews
 {
@@ -25,7 +27,7 @@ class SerializableNews
   @HiveField(5)
   final String pubDate;
 
-  SerializableNews._({
+  SerializableNews({
     @required this.title,
     @required this.link,
     @required this.content,
@@ -45,7 +47,7 @@ class SerializableNews
     pubDate: pubDate,
   );
 
-  static SerializableNews fromRssItem(RssItem rssItem) => SerializableNews._(
+  static SerializableNews fromRssItem(RssItem rssItem) => SerializableNews(
     title: rssItem.title,
     link: rssItem.link,
     content: rssItem.content.value,

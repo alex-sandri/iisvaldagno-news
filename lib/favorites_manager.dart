@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:iisvaldagno_news/serializable_news.dart';
+import 'package:iisvaldagno_news/SerializableNews.dart';
 
 class FavoritesManager
 {
