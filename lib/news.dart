@@ -78,6 +78,8 @@ class _NewsState extends State<News> {
         url: Uri.parse(element.attributes["href"]),
       ));
 
+      element.querySelector("span.badge").remove();
+
       element.text = "[${element.text}](${element.attributes["href"]})";
     });
 
