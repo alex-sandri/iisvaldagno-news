@@ -307,7 +307,11 @@ class _NewsState extends State<News> {
                     .showSnackBar(SnackBar(content: Text("'${widget.item.title}' aggiunto ai preferiti")));
                 },
                 tooltip: "Aggiungi ai preferiti",
-                child: Icon(Icons.favorite_border),
+                child: Icon(
+                  FavoritesManager.getAll().contains(SerializableNews.fromRssItem(widget.item))
+                    ? Icons.favorite
+                    : Icons.favorite_border
+                ),
               ),
             ),
           ),
