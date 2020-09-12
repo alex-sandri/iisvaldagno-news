@@ -176,9 +176,10 @@ class _NewsState extends State<News> {
               NotificationListener<ScrollNotification>(
                 onNotification: (scrollNotification) {
                   setState(() {
-                    _opacity = _scrollController.position.userScrollDirection == ScrollDirection.forward
-                      ? 1
-                      : 0;
+                    if (_scrollController.position.userScrollDirection == ScrollDirection.forward)
+                      _opacity = 1;
+                    else if (_scrollController.position.userScrollDirection == ScrollDirection.reverse)
+                      _opacity = 0;
                   });
 
                   return true;
