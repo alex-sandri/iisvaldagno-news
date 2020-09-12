@@ -298,21 +298,29 @@ class _NewsState extends State<News> {
             opacity: _opacity,
             duration: Duration(milliseconds: 100),
             child: Builder(
-              builder: (context) => FloatingActionButton(
-                onPressed: () async {
-                  await FavoritesManager.add(SerializableNews.fromRssItem(widget.item));
+              builder: (context) {
+                final bool isAlreadyInFavorites = FavoritesManager.getAll().contains(SerializableNews.fromRssItem(widget.item));
 
-                  Scaffold
-                    .of(context)
-                    .showSnackBar(SnackBar(content: Text("'${widget.item.title}' aggiunto ai preferiti")));
-                },
-                tooltip: "Aggiungi ai preferiti",
-                child: Icon(
-                  FavoritesManager.getAll().contains(SerializableNews.fromRssItem(widget.item))
-                    ? Icons.favorite
-                    : Icons.favorite_border
-                ),
-              ),
+                return FloatingActionButton(
+                  onPressed: () async {
+                    isAlreadyInFavorites
+                      ? await FavoritesManager.delete(SerializableNews.fromRssItem(widget.item))
+                      : await FavoritesManager.add(SerializableNews.fromRssItem(widget.item));
+
+                    Scaffold
+                      .of(context)
+                      .showSnackBar(SnackBar(content: Text("'${widget.item.title}' ${isAlreadyInFavorites ? "rimosso dai preferiti" : "aggiunto ai preferiti"}")));
+                  },
+                  tooltip: isAlreadyInFavorites
+                    ? "Rimuovi dai preferiti"
+                    : "Aggiungi ai preferiti",
+                  child: Icon(
+                    isAlreadyInFavorites
+                      ? Icons.favorite
+                      : Icons.favorite_border
+                  ),
+                );
+              },
             ),
           ),
         ),
