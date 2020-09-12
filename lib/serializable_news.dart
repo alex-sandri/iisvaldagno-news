@@ -26,7 +26,7 @@ class SerializableNews
   @HiveField(5)
   final String pubDate;
 
-  SerializableNews({
+  SerializableNews._({
     @required this.title,
     @required this.link,
     @required this.content,
@@ -46,7 +46,7 @@ class SerializableNews
     pubDate: pubDate,
   );
 
-  static SerializableNews fromRssItem(RssItem rssItem) => SerializableNews(
+  static SerializableNews fromRssItem(RssItem rssItem) => SerializableNews._(
     title: rssItem.title,
     link: rssItem.link,
     content: rssItem.content.value,
