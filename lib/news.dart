@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html/parser.dart';
@@ -59,6 +60,10 @@ class News extends StatefulWidget {
 }
 
 class _NewsState extends State<News> {
+  ScrollController _scrollController = ScrollController();
+
+  double _opacity = 1;
+
   @override
   Widget build(BuildContext context) {
     final List<RssContentLink> links = [];
@@ -168,68 +173,80 @@ class _NewsState extends State<News> {
           ),
           body: TabBarView(
             children: [
-              ListView(
-                padding: EdgeInsets.all(8),
-                children: [
-                  Wrap(
-                    spacing: 4,
-                    children: widget.item.categories.map((category) {
-                      Color chipColor;
+              NotificationListener<ScrollNotification>(
+                onNotification: (scrollNotification) {
+                  setState(() {
+                    _opacity = _scrollController.position.userScrollDirection == ScrollDirection.forward
+                      ? 1
+                      : 0;
+                  });
 
-                      switch (category.value)
-                      {
-                        case "Notizie in evidenza": chipColor = Color(0xff013777); break;
-                        case "In evidenza ITI": chipColor = Color(0xffa6d514); break;
-                        case "In evidenza ITE": chipColor = Color(0xffff9100); break;
-                        case "In evidenza IP": chipColor = Color(0xff1f8ebf); break;
-                      }
+                  return true;
+                },
+                child: ListView(
+                  controller: _scrollController,
+                  padding: EdgeInsets.all(8),
+                  children: [
+                    Wrap(
+                      spacing: 4,
+                      children: widget.item.categories.map((category) {
+                        Color chipColor;
 
-                      return ActionChip(
-                        backgroundColor: chipColor,
-                        label: Text(
-                          category.value,
-                        ),
-                        labelStyle: chipColor != null
-                          ? TextStyle(
-                              backgroundColor: chipColor,
-                            )
-                          : null,
-                        onPressed: () {
-                          String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}/page/{{PAGE}}/?feed=rss2";
+                        switch (category.value)
+                        {
+                          case "Notizie in evidenza": chipColor = Color(0xff013777); break;
+                          case "In evidenza ITI": chipColor = Color(0xffa6d514); break;
+                          case "In evidenza ITE": chipColor = Color(0xffff9100); break;
+                          case "In evidenza IP": chipColor = Color(0xff1f8ebf); break;
+                        }
 
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => Home(url),
-                            ),
-                          );
-                        },
-                      );
-                    }).toList(),
-                  ),
+                        return ActionChip(
+                          backgroundColor: chipColor,
+                          label: Text(
+                            category.value,
+                          ),
+                          labelStyle: chipColor != null
+                            ? TextStyle(
+                                backgroundColor: chipColor,
+                              )
+                            : null,
+                          onPressed: () {
+                            String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}/page/{{PAGE}}/?feed=rss2";
 
-                  if (widget.item.categories.isNotEmpty)
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => Home(url),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+
+                    if (widget.item.categories.isNotEmpty)
+                      SizedBox(
+                        height: 8,
+                      ),
+
+                    SelectableText(
+                      widget.item.title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                     SizedBox(
                       height: 8,
                     ),
-
-                  SelectableText(
-                    widget.item.title,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Markdown(
-                    data: document.body.text.trim(),
-                    selectable: true,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    onTapLink: (url) async {
-                      if (await canLaunch(url)) await launch(url);
-                    },
-                  ),
-                ],
+                    Markdown(
+                      data: document.body.text.trim(),
+                      selectable: true,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      onTapLink: (url) async {
+                        if (await canLaunch(url)) await launch(url);
+                      },
+                    ),
+                  ],
+                ),
               ),
               ListView.separated(
                 itemCount: links.isNotEmpty
@@ -273,6 +290,15 @@ class _NewsState extends State<News> {
                 separatorBuilder: (context, index) => Divider(),
               ),
             ],
+          ),
+          floatingActionButton: AnimatedOpacity(
+            opacity: _opacity,
+            duration: Duration(milliseconds: 100),
+            child: FloatingActionButton(
+              onPressed: () {},
+              tooltip: "Aggiungi ai preferiti",
+              child: Icon(Icons.favorite_border),
+            ),
           ),
         ),
       ),
