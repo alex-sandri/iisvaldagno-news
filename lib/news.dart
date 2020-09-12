@@ -313,6 +313,12 @@ class _NewsState extends State<News> {
 
                     setState(() {});
                   },
+                  backgroundColor: isAlreadyInFavorites
+                    ? Colors.pink
+                    : null,
+                  foregroundColor: isAlreadyInFavorites
+                    ? Colors.white
+                    : null,
                   tooltip: isAlreadyInFavorites
                     ? "Rimuovi dai preferiti"
                     : "Aggiungi ai preferiti",
