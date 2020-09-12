@@ -4,6 +4,7 @@ import 'package:iisvaldagno_news/favorites_manager.dart';
 import 'package:iisvaldagno_news/models/SerializableNews.dart';
 import 'package:iisvaldagno_news/news.dart';
 import 'package:iisvaldagno_news/news_list.dart';
+import 'package:iisvaldagno_news/news_list_tile.dart';
 import 'package:iisvaldagno_news/search.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -120,7 +121,7 @@ class _HomeState extends State<Home> {
                   separatorBuilder: (context, index) => Divider(),
                   itemCount: News.categories.length,
                   itemBuilder: (context, index) {
-                    MapEntry<String, String> category = News.categories.entries.elementAt(index);
+                    final MapEntry<String, String> category = News.categories.entries.elementAt(index);
 
                     return ListTile(
                       title: Text(category.key),
@@ -136,7 +137,21 @@ class _HomeState extends State<Home> {
                 );
                 break;
               case 2:
-                body = Container();
+                body = ListView.separated(
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: FavoritesManager.getAll().isNotEmpty
+                    ? FavoritesManager.getAll().length
+                    : 1,
+                  itemBuilder: (context, index) {
+                    if (FavoritesManager.getAll().isEmpty)
+                      return SelectableText(
+                        "Non hai ancora aggiunto nulla ai preferiti",
+                        textAlign: TextAlign.center,
+                      );
+
+                    return NewsListTile(FavoritesManager.getAll()[index].toRssItem());
+                  },
+                );
                 break;
             }
 
