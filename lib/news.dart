@@ -4,7 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html/parser.dart';
+import 'package:iisvaldagno_news/favorites_manager.dart';
 import 'package:iisvaldagno_news/main.dart';
+import 'package:iisvaldagno_news/serializable_news.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -297,8 +299,8 @@ class _NewsState extends State<News> {
             duration: Duration(milliseconds: 100),
             child: Builder(
               builder: (context) => FloatingActionButton(
-                onPressed: () {
-                  // TODO
+                onPressed: () async {
+                  await FavoritesManager.add(SerializableNews.fromRssItem(widget.item));
 
                   Scaffold
                     .of(context)
