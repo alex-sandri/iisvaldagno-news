@@ -108,26 +108,41 @@ class _HomeState extends State<Home> {
               ),
           ],
         ),
-        body: _currentIndex == 0
-          ? NewsList(widget.url)
-          : ListView.separated(
-              separatorBuilder: (context, index) => Divider(),
-              itemCount: News.categories.length,
-              itemBuilder: (context, index) {
-                MapEntry<String, String> category = News.categories.entries.elementAt(index);
+        body: Builder(
+          builder: (context) {
+            Widget body;
 
-                return ListTile(
-                  title: Text(category.key),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => Home(category.value),
-                      ),
+            switch (_currentIndex)
+            {
+              case 0: body = NewsList(widget.url); break;
+              case 1:
+                body = ListView.separated(
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: News.categories.length,
+                  itemBuilder: (context, index) {
+                    MapEntry<String, String> category = News.categories.entries.elementAt(index);
+
+                    return ListTile(
+                      title: Text(category.key),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Home(category.value),
+                          ),
+                        );
+                      },
                     );
                   },
                 );
-              },
-            ),
+                break;
+              case 2:
+                body = Container();
+                break;
+            }
+
+            return body;
+          },
+        ),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
@@ -137,6 +152,10 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
               icon: Icon(Icons.category),
               title: Text("Categorie"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              title: Text("Preferiti"),
             ),
           ],
           currentIndex: _currentIndex,
