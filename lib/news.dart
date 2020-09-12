@@ -310,6 +310,8 @@ class _NewsState extends State<News> {
                     Scaffold
                       .of(context)
                       .showSnackBar(SnackBar(content: Text("'${widget.item.title}' ${isAlreadyInFavorites ? "rimosso dai preferiti" : "aggiunto ai preferiti"}")));
+
+                    setState(() {});
                   },
                   tooltip: isAlreadyInFavorites
                     ? "Rimuovi dai preferiti"
