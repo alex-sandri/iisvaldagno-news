@@ -4,11 +4,17 @@ class FavoritesManager
 {
   static Box _box;
 
-  static dynamic get(String key) => _box.get(key);
+  static List<dynamic> getAll() => _box.get("list");
 
-  static Future<void> set(String key, dynamic value) => _box.put(key, value);
+  static Future<void> add(dynamic value) => _box.put("list", [ ...getAll(), value ]);
 
-  static Future<void> delete(String key) => _box.delete(key);
+  static Future<void> delete(dynamic value) async {
+    final List<dynamic> favorites = getAll();
+
+    favorites.remove(value);
+
+    await _box.put("list", getAll());
+  }
 
   static Future<void> empty() async {
     await _box.deleteFromDisk();
