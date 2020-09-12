@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:iisvaldagno_news/news.dart';
 import 'package:iisvaldagno_news/news_list.dart';
 import 'package:iisvaldagno_news/search.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+
+  await Hive.openBox("favorites");
+
   runApp(MyApp());
 }
 
