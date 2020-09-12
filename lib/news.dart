@@ -86,7 +86,14 @@ class _NewsState extends State<News> {
 
     document.querySelectorAll("ul > li").forEach((element) => element.text = " - ${element.text}");
 
-    document.querySelectorAll("strong").forEach((element) => element.text = "**${element.text}**");
+    document.querySelectorAll("strong").forEach((element) =>
+      element.text =
+        element
+        .text
+        .split(".")
+        .map((phrase) => phrase = phrase.trim().isEmpty ? "" : "**${phrase.trim()}**")
+        .join(". ")
+        .trim());
 
     document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
