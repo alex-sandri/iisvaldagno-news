@@ -238,12 +238,10 @@ class _NewsState extends State<News> {
                     SizedBox(
                       height: 8,
                     ),
-                    Markdown(
+                    MarkdownBody(
                       data: document.body.text.trim(),
                       selectable: true,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
                       onTapLink: (url) async {
                         if (await canLaunch(url)) await launch(url);
                       },
