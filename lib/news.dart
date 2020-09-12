@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html/parser.dart';
 import 'package:iisvaldagno_news/main.dart';
