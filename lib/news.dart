@@ -241,7 +241,6 @@ class _NewsState extends State<News> {
                     MarkdownBody(
                       data: document.body.text.trim(),
                       selectable: true,
-                      shrinkWrap: true,
                       onTapLink: (url) async {
                         if (await canLaunch(url)) await launch(url);
                       },
