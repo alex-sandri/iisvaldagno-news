@@ -79,7 +79,7 @@ class _NewsState extends State<News> {
       ));
 
       // Remove download count
-      element.querySelector("span.badge").remove();
+      element.querySelector("span.badge")?.remove();
 
       element.text = "[${element.text}](${element.attributes["href"]})";
     });
