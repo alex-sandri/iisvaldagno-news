@@ -206,9 +206,12 @@ class _NewsState extends State<News> {
                       );
                     }).toList(),
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
+
+                  if (widget.item.categories.isNotEmpty)
+                    SizedBox(
+                      height: 8,
+                    ),
+
                   SelectableText(
                     widget.item.title,
                     style: Theme.of(context).textTheme.headline6,
