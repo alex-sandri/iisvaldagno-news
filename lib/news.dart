@@ -85,6 +85,10 @@ class _NewsState extends State<News> {
       element.replaceWith(dom.Element.tag("span")..text = " - ${element.text}");
     });
 
+    document.querySelectorAll("strong").forEach((element) {
+      element.replaceWith(dom.Element.tag("span")..text = "**${element.text}**");
+    });
+
     document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
     return Material(
