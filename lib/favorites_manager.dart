@@ -7,7 +7,7 @@ class FavoritesManager
 
   static List<SerializableNews> getAll() => _box.get("list");
 
-  static Future<void> add(SerializableNews value) => _box.put("list", [ ...getAll(), value ]);
+  static Future<void> add(SerializableNews value) => _box.put("list", [ ...(getAll() ?? []), value ]);
 
   static Future<void> delete(SerializableNews value) async {
     final List<SerializableNews> favorites = getAll();
