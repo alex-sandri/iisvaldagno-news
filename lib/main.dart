@@ -20,6 +20,8 @@ void main() async {
 
   await FavoritesManager.initialize();
 
+  await Hive.openBox("miscellaneous");
+
   runApp(MyApp());
 
   BackgroundFetch.configure(BackgroundFetchConfig(
@@ -39,9 +41,14 @@ void main() async {
 
     final List<RssItem> items = feed.items;
 
-    // TODO: Check if new news are available
+    final String previousLatestNewsUrl = Hive.box("miscellaneous").get("previousLatestNewsUrl");
 
-    // TODO: Send notification
+    if (previousLatestNewsUrl != null && items[0].link != previousLatestNewsUrl)
+    {
+      await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
+
+      // TODO: Send notification
+    }
 
     BackgroundFetch.finish(taskId);
   });
