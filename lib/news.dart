@@ -75,6 +75,8 @@ class _NewsState extends State<News> {
       // Remove download count
       element.querySelector("span.badge")?.remove();
 
+      element.text = element.text.trim();
+
       links.add(RssContentLink(
         text: element.text,
         url: Uri.parse(element.attributes["href"]),
