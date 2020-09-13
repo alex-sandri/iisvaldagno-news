@@ -62,9 +62,9 @@ void main() async {
 
       await FlutterLocalNotificationsPlugin().show(0, "Notizie", "Ci sono nuove notizie da leggere", NotificationDetails(
         AndroidNotificationDetails(
-          "CHANNEL_ID",
-          "CHANNEL_NAME",
-          "CHANNEL_DESCRIPTION",
+          "0",
+          "Notizie",
+          "Notizie",
         ),
         IOSNotificationDetails(),
       ));
