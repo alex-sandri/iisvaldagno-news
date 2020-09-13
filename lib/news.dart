@@ -111,7 +111,7 @@ class _NewsState extends State<News> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              widget.item.title,
+              widget.item.title.replaceAllMapped(RegExp("."), (match) => match.group(0) + "\u200b"),
             ),
             bottom: TabBar(
               tabs: [
