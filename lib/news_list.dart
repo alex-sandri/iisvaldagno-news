@@ -22,7 +22,7 @@ class _NewsListState extends State<NewsList> {
   Future<List<RssItem>> _getItems() async {
     final http.Response response = await http.get(
       widget.url?.replaceFirst("{{PAGE}}", _page.toString())
-      ?? "https://www.iisvaldagno.it/page/$_page/?s=&feed=rss2"
+      ?? "https://www.iisvaldagno.it/page/$_page/?feed=rss2"
     );
 
     final RssFeed feed = RssFeed.parse(response.body);
