@@ -60,7 +60,7 @@ void main() async {
     {
       await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
 
-      await FlutterLocalNotificationsPlugin().show(0, "TITLE", "BODY", NotificationDetails(
+      await FlutterLocalNotificationsPlugin().show(0, "Notizie", "Ci sono nuove notizie da leggere", NotificationDetails(
         AndroidNotificationDetails(
           "CHANNEL_ID",
           "CHANNEL_NAME",
