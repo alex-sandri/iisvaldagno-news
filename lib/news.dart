@@ -282,7 +282,13 @@ class _NewsState extends State<News> {
 
                   final RssContentLink link = links[index];
 
+                  Icon leadingIcon;
+
+                  if (link.url.toString().endsWith(".pdf")) leadingIcon = Icon(Icons.picture_as_pdf);
+                  else leadingIcon = Icon(Icons.language);
+
                   return ListTile(
+                    leading: leadingIcon,
                     title: Text(
                       link.text,
                       style: TextStyle(
