@@ -34,6 +34,7 @@ dependencies:
   hive_generator: ^0.7.1
   build_runner: ^1.10.1
   background_fetch: ^0.6.0
+  flutter_local_notifications: ^1.4.4+4
   flutter:
     sdk: flutter
   flutter_localizations:

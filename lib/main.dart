@@ -1,6 +1,7 @@
 import 'package:background_fetch/background_fetch.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:iisvaldagno_news/favorites_manager.dart';
 import 'package:iisvaldagno_news/models/SerializableNews.dart';
@@ -21,6 +22,18 @@ void main() async {
   await FavoritesManager.initialize();
 
   await Hive.openBox("miscellaneous");
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+    AndroidInitializationSettings("app_icon"),
+    IOSInitializationSettings(),
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onSelectNotification: (payload) => null,
+  );
 
   runApp(MyApp());
 
@@ -47,7 +60,14 @@ void main() async {
     {
       await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
 
-      // TODO: Send notification
+      await FlutterLocalNotificationsPlugin().show(0, "TITLE", "BODY", NotificationDetails(
+        AndroidNotificationDetails(
+          "CHANNEL_ID",
+          "CHANNEL_NAME",
+          "CHANNEL_DESCRIPTION",
+        ),
+        IOSNotificationDetails(),
+      ));
     }
 
     BackgroundFetch.finish(taskId);
