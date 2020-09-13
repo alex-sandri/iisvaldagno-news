@@ -153,7 +153,7 @@ class _NewsState extends State<News> {
                               title: SelectableText("Pubblicato"),
                               subtitle: SelectableText(
                                 DateFormat
-                                  .yMMMMd()
+                                  .yMMMMd(Localizations.localeOf(context).toLanguageTag())
                                   .add_jm()
                                   .format(
                                     DateFormat("E, dd MMM yyyy HH:mm:ss zzz")

@@ -27,7 +27,7 @@ class NewsListTile extends StatelessWidget {
         // Source
         // https://stackoverflow.com/a/61801371
         DateFormat
-          .yMMMMd()
+          .yMMMMd(Localizations.localeOf(context).toLanguageTag())
           .add_jm()
           .format(
             DateFormat("E, dd MMM yyyy HH:mm:ss zzz")
