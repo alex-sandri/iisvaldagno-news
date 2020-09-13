@@ -33,6 +33,7 @@ dependencies:
   hive_flutter: ^0.3.1
   hive_generator: ^0.7.1
   build_runner: ^1.10.1
+  background_fetch: ^0.6.0
   flutter:
     sdk: flutter
   flutter_localizations:

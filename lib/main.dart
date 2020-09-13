@@ -1,3 +1,4 @@
+import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:iisvaldagno_news/favorites_manager.dart';
@@ -18,6 +19,24 @@ void main() async {
   await FavoritesManager.initialize();
 
   runApp(MyApp());
+
+  BackgroundFetch.configure(BackgroundFetchConfig(
+    minimumFetchInterval: 15,
+    stopOnTerminate: false,
+    enableHeadless: false,
+    requiresBatteryNotLow: false,
+    requiresCharging: false,
+    requiresStorageNotLow: false,
+    requiresDeviceIdle: false,
+    requiredNetworkType: NetworkType.ANY,
+    startOnBoot: true,
+  ), (String taskId) async {
+    // TODO: Fetch RSS
+    // TODO: Check if new news are available
+    // TODO: Send notification
+
+    BackgroundFetch.finish(taskId);
+  });
 }
 
 class MyApp extends StatelessWidget {
