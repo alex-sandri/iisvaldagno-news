@@ -1,4 +1,5 @@
 import 'package:background_fetch/background_fetch.dart';
+import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:iisvaldagno_news/favorites_manager.dart';
@@ -10,6 +11,7 @@ import 'package:iisvaldagno_news/search.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart' as http;
 
 void main() async {
   await Hive.initFlutter();
@@ -31,8 +33,14 @@ void main() async {
     requiredNetworkType: NetworkType.ANY,
     startOnBoot: true,
   ), (String taskId) async {
-    // TODO: Fetch RSS
+    final http.Response response = await http.get("https://www.iisvaldagno.it/?feed=rss2");
+
+    final RssFeed feed = RssFeed.parse(response.body);
+
+    final List<RssItem> items = feed.items;
+
     // TODO: Check if new news are available
+
     // TODO: Send notification
 
     BackgroundFetch.finish(taskId);
