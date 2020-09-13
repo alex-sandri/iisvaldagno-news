@@ -72,13 +72,13 @@ class _NewsState extends State<News> {
     final document = parse(widget.item.content.value);
 
     document.querySelectorAll("a").forEach((element) {
+      // Remove download count
+      element.querySelector("span.badge")?.remove();
+
       links.add(RssContentLink(
         text: element.text,
         url: Uri.parse(element.attributes["href"]),
       ));
-
-      // Remove download count
-      element.querySelector("span.badge")?.remove();
 
       element.text = "[${element.text}](${element.attributes["href"]})";
     });
