@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html/parser.dart';
 import 'package:iisvaldagno_news/favorites_manager.dart';
@@ -10,17 +9,6 @@ import 'package:iisvaldagno_news/models/SerializableNews.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-class RssContentLink
-{
-  String text;
-  Uri url;
-
-  RssContentLink({
-    @required this.text,
-    @required this.url,
-  });
-}
 
 class News extends StatefulWidget {
   final RssItem item;
@@ -67,22 +55,13 @@ class _NewsState extends State<News> {
 
   @override
   Widget build(BuildContext context) {
-    final List<RssContentLink> links = [];
-
     final document = parse(widget.item.content.value);
 
     document.querySelectorAll("a").forEach((element) {
       // Remove download count
       element.querySelector("span.badge")?.remove();
 
-      element.text = element.text.trim();
-
-      links.add(RssContentLink(
-        text: element.text,
-        url: Uri.parse(element.attributes["href"]),
-      ));
-
-      element.text = "[${element.text}](${element.attributes["href"]})";
+      element.text = "[${element.text.trim()}](${element.attributes["href"]})";
     });
 
     document.querySelectorAll("ul > li").forEach((element) => element.text = " - ${element.text}");
@@ -108,251 +87,185 @@ class _NewsState extends State<News> {
     document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
     return Material(
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              widget.item.title.replaceAllMapped(RegExp("."), (match) => match.group(0) + "\u200b"),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.item.title.replaceAllMapped(RegExp("."), (match) => match.group(0) + "\u200b"),
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.open_in_new),
+              tooltip: "Apri nel browser",
+              onPressed: () async {
+                if (await canLaunch(widget.item.link))
+                  await launch(widget.item.link);
+              },
             ),
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  text: "News",
-                  icon: Icon(Icons.view_headline),
-                ),
-                Tab(
-                  text: "Link",
-                  icon: Icon(Icons.link),
-                ),
-              ],
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.open_in_new),
-                tooltip: "Apri nel browser",
-                onPressed: () async {
-                  if (await canLaunch(widget.item.link))
-                    await launch(widget.item.link);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.info_outline),
-                tooltip: "Informazioni",
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: [
-                            ListTile(
-                              title: SelectableText("Autore"),
-                              subtitle: SelectableText(widget.item.dc.creator),
-                            ),
-                            ListTile(
-                              title: SelectableText("Pubblicato"),
-                              subtitle: SelectableText(
-                                DateFormat
-                                  .yMMMMd(Localizations.localeOf(context).toLanguageTag())
-                                  .add_jm()
-                                  .format(
-                                    DateFormat("E, dd MMM yyyy HH:mm:ss zzz")
-                                      .parse(widget.item.pubDate)
-                                      .add(Duration(hours: 2))
-                                  ),
-                              ),
-                            ),
-                            ListTile(
-                              isThreeLine: true,
-                              title: SelectableText("Link"),
-                              subtitle: SelectableText(
-                                widget.item.link,
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
+            IconButton(
+              icon: Icon(Icons.info_outline),
+              tooltip: "Informazioni",
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          ListTile(
+                            title: SelectableText("Autore"),
+                            subtitle: SelectableText(widget.item.dc.creator),
+                          ),
+                          ListTile(
+                            title: SelectableText("Pubblicato"),
+                            subtitle: SelectableText(
+                              DateFormat
+                                .yMMMMd(Localizations.localeOf(context).toLanguageTag())
+                                .add_jm()
+                                .format(
+                                  DateFormat("E, dd MMM yyyy HH:mm:ss zzz")
+                                    .parse(widget.item.pubDate)
+                                    .add(Duration(hours: 2))
                                 ),
-                                onTap: () async {
-                                  if (await canLaunch(widget.item.link))
-                                    await launch(widget.item.link);
-                                },
-                              ),
                             ),
-                          ],
+                          ),
+                          ListTile(
+                            isThreeLine: true,
+                            title: SelectableText("Link"),
+                            subtitle: SelectableText(
+                              widget.item.link,
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                              onTap: () async {
+                                if (await canLaunch(widget.item.link))
+                                  await launch(widget.item.link);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.share),
+              tooltip: "Condividi",
+              onPressed: () => Share.share(widget.item.link),
+            ),
+          ],
+        ),
+        body: NotificationListener<ScrollNotification>(
+          onNotification: (scrollNotification) {
+            setState(() {
+              if (_scrollController.position.userScrollDirection == ScrollDirection.forward)
+                _opacity = 1;
+              else if (_scrollController.position.userScrollDirection == ScrollDirection.reverse)
+                _opacity = 0;
+            });
+
+            return true;
+          },
+          child: ListView(
+            controller: _scrollController,
+            padding: EdgeInsets.all(8),
+            children: [
+              Wrap(
+                spacing: 4,
+                children: widget.item.categories.map((category) {
+                  Color chipColor;
+
+                  switch (category.value)
+                  {
+                    case "Notizie in evidenza": chipColor = Color(0xff013777); break;
+                    case "In evidenza ITI": chipColor = Color(0xffa6d514); break;
+                    case "In evidenza ITE": chipColor = Color(0xffff9100); break;
+                    case "In evidenza IP": chipColor = Color(0xff1f8ebf); break;
+                  }
+
+                  return ActionChip(
+                    backgroundColor: chipColor,
+                    label: Text(
+                      category.value,
+                    ),
+                    labelStyle: chipColor != null
+                      ? TextStyle(
+                          backgroundColor: chipColor,
+                        )
+                      : null,
+                    onPressed: () {
+                      String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}/page/{{PAGE}}/?feed=rss2";
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => Home(url),
                         ),
                       );
                     },
                   );
-                },
+                }).toList(),
               ),
-              IconButton(
-                icon: Icon(Icons.share),
-                tooltip: "Condividi",
-                onPressed: () => Share.share(widget.item.link),
-              ),
-            ],
-          ),
-          body: TabBarView(
-            children: [
-              NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  setState(() {
-                    if (_scrollController.position.userScrollDirection == ScrollDirection.forward)
-                      _opacity = 1;
-                    else if (_scrollController.position.userScrollDirection == ScrollDirection.reverse)
-                      _opacity = 0;
-                  });
 
-                  return true;
-                },
-                child: ListView(
-                  controller: _scrollController,
-                  padding: EdgeInsets.all(8),
-                  children: [
-                    Wrap(
-                      spacing: 4,
-                      children: widget.item.categories.map((category) {
-                        Color chipColor;
-
-                        switch (category.value)
-                        {
-                          case "Notizie in evidenza": chipColor = Color(0xff013777); break;
-                          case "In evidenza ITI": chipColor = Color(0xffa6d514); break;
-                          case "In evidenza ITE": chipColor = Color(0xffff9100); break;
-                          case "In evidenza IP": chipColor = Color(0xff1f8ebf); break;
-                        }
-
-                        return ActionChip(
-                          backgroundColor: chipColor,
-                          label: Text(
-                            category.value,
-                          ),
-                          labelStyle: chipColor != null
-                            ? TextStyle(
-                                backgroundColor: chipColor,
-                              )
-                            : null,
-                          onPressed: () {
-                            String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}/page/{{PAGE}}/?feed=rss2";
-
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => Home(url),
-                              ),
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-
-                    if (widget.item.categories.isNotEmpty)
-                      SizedBox(
-                        height: 8,
-                      ),
-
-                    SelectableText(
-                      widget.item.title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    MarkdownBody(
-                      data: document.body.text.trim(),
-                      selectable: true,
-                      onTapLink: (url) async {
-                        if (await canLaunch(url)) await launch(url);
-                      },
-                    ),
-                  ],
+              if (widget.item.categories.isNotEmpty)
+                SizedBox(
+                  height: 8,
                 ),
+
+              SelectableText(
+                widget.item.title,
+                style: Theme.of(context).textTheme.headline6,
               ),
-              ListView.separated(
-                itemCount: links.isNotEmpty
-                  ? links.length
-                  : 1,
-                itemBuilder: (context, index) {
-                  if (links.isEmpty)
-                    return Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Text(
-                        "Non sono presenti allegati",
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-
-                  final RssContentLink link = links[index];
-
-                  Icon leadingIcon;
-
-                  if (link.url.toString().endsWith(".pdf")) leadingIcon = Icon(Icons.picture_as_pdf);
-                  else leadingIcon = Icon(Icons.language);
-
-                  return ListTile(
-                    leading: leadingIcon,
-                    title: Text(
-                      link.text,
-                      style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                    onTap: () async {
-                      if (await canLaunch(link.url.toString()))
-                        await launch(link.url.toString());
-                    },
-                    onLongPress: () async {
-                      await Clipboard.setData(ClipboardData(
-                        text: link.url.toString(),
-                      ));
-
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text("Link copiato negli appunti"),
-                      ));
-                    },
-                  );
+              SizedBox(
+                height: 8,
+              ),
+              MarkdownBody(
+                data: document.body.text.trim(),
+                selectable: true,
+                onTapLink: (url) async {
+                  if (await canLaunch(url)) await launch(url);
                 },
-                separatorBuilder: (context, index) => Divider(),
               ),
             ],
           ),
-          floatingActionButton: AnimatedOpacity(
-            opacity: _opacity,
-            duration: Duration(milliseconds: 100),
-            child: Builder(
-              builder: (context) {
-                final bool isAlreadyInFavorites = FavoritesManager.getAll().contains(SerializableNews.fromRssItem(widget.item));
+        ),
+        floatingActionButton: AnimatedOpacity(
+          opacity: _opacity,
+          duration: Duration(milliseconds: 100),
+          child: Builder(
+            builder: (context) {
+              final bool isAlreadyInFavorites = FavoritesManager.getAll().contains(SerializableNews.fromRssItem(widget.item));
 
-                return FloatingActionButton(
-                  onPressed: () async {
-                    isAlreadyInFavorites
-                      ? await FavoritesManager.delete(SerializableNews.fromRssItem(widget.item))
-                      : await FavoritesManager.add(SerializableNews.fromRssItem(widget.item));
+              return FloatingActionButton(
+                onPressed: () async {
+                  isAlreadyInFavorites
+                    ? await FavoritesManager.delete(SerializableNews.fromRssItem(widget.item))
+                    : await FavoritesManager.add(SerializableNews.fromRssItem(widget.item));
 
-                    Scaffold
-                      .of(context)
-                      .showSnackBar(SnackBar(content: Text("'${widget.item.title}' ${isAlreadyInFavorites ? "rimosso dai preferiti" : "aggiunto ai preferiti"}")));
+                  Scaffold
+                    .of(context)
+                    .showSnackBar(SnackBar(content: Text("'${widget.item.title}' ${isAlreadyInFavorites ? "rimosso dai preferiti" : "aggiunto ai preferiti"}")));
 
-                    setState(() {});
-                  },
-                  backgroundColor: isAlreadyInFavorites
-                    ? Colors.pink
-                    : null,
-                  foregroundColor: isAlreadyInFavorites
-                    ? Colors.white
-                    : null,
-                  tooltip: isAlreadyInFavorites
-                    ? "Rimuovi dai preferiti"
-                    : "Aggiungi ai preferiti",
-                  child: Icon(
-                    isAlreadyInFavorites
-                      ? Icons.favorite
-                      : Icons.favorite_border
-                  ),
-                );
-              },
-            ),
+                  setState(() {});
+                },
+                backgroundColor: isAlreadyInFavorites
+                  ? Colors.pink
+                  : null,
+                foregroundColor: isAlreadyInFavorites
+                  ? Colors.white
+                  : null,
+                tooltip: isAlreadyInFavorites
+                  ? "Rimuovi dai preferiti"
+                  : "Aggiungi ai preferiti",
+                child: Icon(
+                  isAlreadyInFavorites
+                    ? Icons.favorite
+                    : Icons.favorite_border
+                ),
+              );
+            },
           ),
         ),
       ),
