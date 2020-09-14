@@ -33,7 +33,7 @@ class News extends StatefulWidget {
     "Elettronica": "$_baseUrl/categorie/iti/iti-elettronica/$_urlSuffix",
     "Informatica": "$_baseUrl/categorie/iti/iti-informatica/$_urlSuffix",
     "Meccanica e meccatronica": "$_baseUrl/categorie/iti/iti-meccanica/$_urlSuffix",
-    "Moda": "$_baseUrl/categorie/iti/iti-moda/",
+    "Moda": "$_baseUrl/categorie/iti/iti-moda/$_urlSuffix",
     // ITE
     "Amministrazione, finanza e marketing": "$_baseUrl/categorie/ite/ite-afm/$_urlSuffix",
     "Sistemi informativi": "$_baseUrl/categorie/ite/ite-sistemi-informativi/$_urlSuffix",
