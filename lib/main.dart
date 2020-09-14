@@ -58,8 +58,6 @@ void main() async {
 
     if (previousLatestNewsUrl != null && items[0].link != previousLatestNewsUrl)
     {
-      await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
-
       await FlutterLocalNotificationsPlugin().show(0, "Notizie", "Ci sono nuove notizie da leggere", NotificationDetails(
         AndroidNotificationDetails(
           "0",
@@ -69,6 +67,8 @@ void main() async {
         IOSNotificationDetails(),
       ));
     }
+
+    await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
 
     BackgroundFetch.finish(taskId);
   });
