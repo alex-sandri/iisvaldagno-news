@@ -1,5 +1,5 @@
-import 'package:background_fetch/background_fetch.dart';
 import 'package:dart_rss/dart_rss.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
@@ -13,31 +13,38 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:workmanager/workmanager.dart';
 
-void fetchNews(String taskId) async {
-  final http.Response response = await http.get("https://www.iisvaldagno.it/?feed=rss2");
+void callbackDispatcher() async {
+  Workmanager.executeTask((task, inputData) async {
+    final http.Response response = await http.get("https://www.iisvaldagno.it/?feed=rss2");
 
-  final RssFeed feed = RssFeed.parse(response.body);
+    final RssFeed feed = RssFeed.parse(response.body);
 
-  final List<RssItem> items = feed.items;
+    final List<RssItem> items = feed.items;
 
-  final String previousLatestNewsUrl = Hive.box("miscellaneous").get("previousLatestNewsUrl");
+    await Hive.initFlutter();
 
-  if (previousLatestNewsUrl != null && items[0].link != previousLatestNewsUrl)
-  {
-    await FlutterLocalNotificationsPlugin().show(0, "Notizie", "Ci sono nuove notizie da leggere", NotificationDetails(
-      AndroidNotificationDetails(
-        "0",
-        "Notizie",
-        "Notizie",
-      ),
-      IOSNotificationDetails(),
-    ));
-  }
+    await Hive.openBox("miscellaneous");
 
-  await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
+    final String previousLatestNewsUrl = Hive.box("miscellaneous").get("previousLatestNewsUrl");
 
-  BackgroundFetch.finish(taskId);
+    if (previousLatestNewsUrl != null && items[0].link != previousLatestNewsUrl)
+    {
+      await FlutterLocalNotificationsPlugin().show(0, "Notizie", "Ci sono nuove notizie da leggere", NotificationDetails(
+        AndroidNotificationDetails(
+          "0",
+          "Notizie",
+          "Notizie",
+        ),
+        IOSNotificationDetails(),
+      ));
+    }
+
+    await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
+
+    return true;
+  });
 }
 
 void main() async {
@@ -61,24 +68,15 @@ void main() async {
     onSelectNotification: (payload) => null,
   );
 
-  runApp(MyApp());
+  Workmanager.initialize(callbackDispatcher);
 
-  BackgroundFetch.configure(
-    BackgroundFetchConfig(
-      minimumFetchInterval: 15,
-      stopOnTerminate: false,
-      enableHeadless: true,
-      requiresBatteryNotLow: false,
-      requiresCharging: false,
-      requiresStorageNotLow: false,
-      requiresDeviceIdle: false,
-      requiredNetworkType: NetworkType.ANY,
-      startOnBoot: true,
-    ),
-    fetchNews,
+  Workmanager.registerPeriodicTask(
+    "fetchNews",
+    "fetchNews",
+    frequency: Duration(minutes: 15),
   );
 
-  BackgroundFetch.registerHeadlessTask(fetchNews);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
