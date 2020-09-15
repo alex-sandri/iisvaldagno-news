@@ -128,9 +128,7 @@ class _NewsListState extends State<NewsList> {
                           ),
                         ),
                         FlatButton(
-                          onPressed: () {
-                            // TODO
-                          },
+                          onPressed: _handleRefresh,
                           color: Colors.black45,
                           child: Text("Riprova"),
                         ),
