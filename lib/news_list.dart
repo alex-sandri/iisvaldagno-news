@@ -1,5 +1,6 @@
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:iisvaldagno_news/news_list_tile.dart';
 import 'package:http/http.dart' as http;
 
@@ -41,6 +42,8 @@ class _NewsListState extends State<NewsList> {
       setState(() {
         _items = items;
       });
+
+    await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
   }
 
   bool _loading = false;
