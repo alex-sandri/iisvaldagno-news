@@ -21,6 +21,8 @@ class _NewsListState extends State<NewsList> {
 
   bool _showLoadMoreButton = true;
 
+  bool _isOffline = false;
+
   Future<List<RssItem>> _getItems() async {
     try
     {
@@ -28,6 +30,10 @@ class _NewsListState extends State<NewsList> {
         widget.url?.replaceFirst("{{PAGE}}", _page.toString())
         ?? "https://www.iisvaldagno.it/page/$_page/?feed=rss2"
       );
+
+      setState(() {
+        _isOffline = false;
+      });
 
       final RssFeed feed = RssFeed.parse(response.body);
 
@@ -37,7 +43,9 @@ class _NewsListState extends State<NewsList> {
     }
     on SocketException catch (error)
     {
-      print("error");
+      setState(() {
+        _isOffline = true;
+      });
 
       return [];
     }
@@ -108,6 +116,28 @@ class _NewsListState extends State<NewsList> {
               separatorBuilder: (context, index) => Divider(),
               itemCount: _items.length + 1,
               itemBuilder: (context, index) {
+                if (_isOffline)
+                  return Center(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(4),
+                          child: Text(
+                            "Nessuna connessione a Internet",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            // TODO
+                          },
+                          color: Colors.black45,
+                          child: Text("Riprova"),
+                        ),
+                      ],
+                    ),
+                  );
+
                 if (_items.isEmpty)
                   return Padding(
                     padding: EdgeInsets.all(4),
