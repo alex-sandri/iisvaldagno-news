@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -21,16 +23,25 @@ class _NewsListState extends State<NewsList> {
   bool _showLoadMoreButton = true;
 
   Future<List<RssItem>> _getItems() async {
-    final http.Response response = await http.get(
-      widget.url?.replaceFirst("{{PAGE}}", _page.toString())
-      ?? "https://www.iisvaldagno.it/page/$_page/?feed=rss2"
-    );
+    try
+    {
+      final http.Response response = await http.get(
+        widget.url?.replaceFirst("{{PAGE}}", _page.toString())
+        ?? "https://www.iisvaldagno.it/page/$_page/?feed=rss2"
+      );
 
-    final RssFeed feed = RssFeed.parse(response.body);
+      final RssFeed feed = RssFeed.parse(response.body);
 
-    final List<RssItem> items = feed.items;
+      final List<RssItem> items = feed.items;
 
-    return items;
+      return items;
+    }
+    on SocketException catch (error)
+    {
+      print("error");
+
+      return [];
+    }
   }
 
   Future<void> _handleRefresh() async {
@@ -42,8 +53,6 @@ class _NewsListState extends State<NewsList> {
       setState(() {
         _items = items;
       });
-
-    await Hive.box("miscellaneous").put("previousLatestNewsUrl", items[0].link);
   }
 
   bool _loading = false;
