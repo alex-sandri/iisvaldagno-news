@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:iisvaldagno_news/news_list_tile.dart';
 import 'package:http/http.dart' as http;
 
