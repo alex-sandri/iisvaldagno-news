@@ -13,10 +13,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:workmanager/workmanager.dart';
+import 'package:workmanager/workmanager.dart' as wm;
 
 void callbackDispatcher() async {
-  Workmanager.executeTask((task, inputData) async {
+  wm.Workmanager.executeTask((task, inputData) async {
     final http.Response response = await http.get("https://www.iisvaldagno.it/?feed=rss2");
 
     final RssFeed feed = RssFeed.parse(response.body);
@@ -68,12 +68,15 @@ void main() async {
     onSelectNotification: (payload) => null,
   );
 
-  Workmanager.initialize(callbackDispatcher);
+  wm.Workmanager.initialize(callbackDispatcher);
 
-  Workmanager.registerPeriodicTask(
+  wm.Workmanager.registerPeriodicTask(
     "fetchNews",
     "fetchNews",
     frequency: Duration(minutes: 15),
+    constraints: wm.Constraints(
+      networkType: wm.NetworkType.connected,
+    ),
   );
 
   runApp(MyApp());
