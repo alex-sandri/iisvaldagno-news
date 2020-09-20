@@ -96,6 +96,13 @@ class _NewsState extends State<News> {
           ),
           actions: [
             IconButton(
+              icon: Icon(Icons.refresh),
+              tooltip: "Ricarica",
+              onPressed: () {
+                // TODO
+              },
+            ),
+            IconButton(
               icon: Icon(Icons.open_in_new),
               tooltip: "Apri nel browser",
               onPressed: () async {
