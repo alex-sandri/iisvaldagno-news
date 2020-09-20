@@ -41,7 +41,7 @@ class _NewsListState extends State<NewsList> {
 
       return items;
     }
-    on SocketException catch (error)
+    on SocketException
     {
       setState(() {
         _isOffline = true;
