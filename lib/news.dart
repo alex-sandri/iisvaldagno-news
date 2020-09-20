@@ -98,30 +98,36 @@ class _NewsState extends State<News> {
             widget.item.title.replaceAllMapped(RegExp("."), (match) => match.group(0) + "\u200b"),
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.refresh),
-              tooltip: "Ricarica",
-              onPressed: () async {
-                try
-                {
-                  final http.Response response = await http.get(widget.item.link);
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.refresh),
+                tooltip: "Ricarica",
+                onPressed: () async {
+                  try
+                  {
+                    final http.Response response = await http.get(widget.item.link);
 
-                  final String content = parse(response.body).querySelector(".entry-content").innerHtml;
+                    final String content = parse(response.body).querySelector(".entry-content").innerHtml;
 
-                  final SerializableNews serializableNews = SerializableNews.fromRssItem(widget.item);
+                    final SerializableNews serializableNews = SerializableNews.fromRssItem(widget.item);
 
-                  if (FavoritesManager.isFavorite(serializableNews))
-                    FavoritesManager.update(serializableNews, serializableNews.copyWith(
-                      content: content,
-                    ));
-                }
-                on SocketException
-                {
-                  Scaffold
-                    .of(context)
-                    .showSnackBar(SnackBar(content: Text("Nessuna connessione a Internet")));
-                }
-              },
+                    if (FavoritesManager.isFavorite(serializableNews))
+                      FavoritesManager.update(serializableNews, serializableNews.copyWith(
+                        content: content,
+                      ));
+
+                    Scaffold
+                      .of(context)
+                      .showSnackBar(SnackBar(content: Text("Notizia aggiornata")));
+                  }
+                  on SocketException
+                  {
+                    Scaffold
+                      .of(context)
+                      .showSnackBar(SnackBar(content: Text("Nessuna connessione a Internet")));
+                  }
+                },
+              ),
             ),
             IconButton(
               icon: Icon(Icons.open_in_new),
