@@ -9,6 +9,14 @@ class FavoritesManager
 
   static Future<void> add(SerializableNews value) => _box.put("list", [ ...getAll(), value ]);
 
+  static Future<void> update(SerializableNews oldValue, SerializableNews newValue) async {
+    final List<SerializableNews> favorites = getAll();
+
+    favorites[favorites.indexOf(oldValue)] = newValue;
+
+    await _box.put("list", favorites);
+  }
+
   static Future<void> delete(SerializableNews value) async {
     final List<SerializableNews> favorites = getAll();
 
@@ -24,4 +32,6 @@ class FavoritesManager
   }
 
   static Future<void> initialize() async => _box = await Hive.openBox("favorites");
+
+  static bool isFavorite(SerializableNews value) => getAll().contains(value);
 }

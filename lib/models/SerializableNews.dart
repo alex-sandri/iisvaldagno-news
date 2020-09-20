@@ -47,6 +47,22 @@ class SerializableNews
     pubDate: pubDate,
   );
 
+  SerializableNews copyWith({
+    String title,
+    String link,
+    String content,
+    List<String> categories,
+    String creator,
+    String pubDate,
+  }) => SerializableNews(
+    title: title ?? this.title,
+    link: link ?? this.link,
+    content: content ?? this.content,
+    categories: categories ?? this.categories,
+    creator: creator ?? this.creator,
+    pubDate: pubDate ?? this.pubDate,
+  );
+
   static SerializableNews fromRssItem(RssItem rssItem) => SerializableNews(
     title: rssItem.title,
     link: rssItem.link,

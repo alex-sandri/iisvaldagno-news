@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:dart_rss/dart_rss.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html/parser.dart';
+import 'package:http/http.dart' as http;
 import 'package:iisvaldagno_news/favorites_manager.dart';
 import 'package:iisvaldagno_news/main.dart';
 import 'package:iisvaldagno_news/models/SerializableNews.dart';
@@ -98,8 +101,26 @@ class _NewsState extends State<News> {
             IconButton(
               icon: Icon(Icons.refresh),
               tooltip: "Ricarica",
-              onPressed: () {
-                // TODO
+              onPressed: () async {
+                try
+                {
+                  final http.Response response = await http.get(widget.item.link);
+
+                  final String content = parse(response.body).querySelector(".entry-content").innerHtml;
+
+                  final SerializableNews serializableNews = SerializableNews.fromRssItem(widget.item);
+
+                  if (FavoritesManager.isFavorite(serializableNews))
+                    FavoritesManager.update(serializableNews, serializableNews.copyWith(
+                      content: content,
+                    ));
+                }
+                on SocketException
+                {
+                  Scaffold
+                    .of(context)
+                    .showSnackBar(SnackBar(content: Text("Nessuna connessione a Internet")));
+                }
               },
             ),
             IconButton(
