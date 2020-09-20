@@ -70,19 +70,21 @@ class _NewsState extends State<News> {
       element.text =
         element
         .text
-        .split(".")
+        .split(". ")
         .map((phrase) => phrase = phrase.trim().isEmpty ? "" : "**${phrase.trim()}**")
         .join(". ")
-        .trim());
+        .trim()
+        + " ");
 
     document.querySelectorAll("em").forEach((element) =>
       element.text =
         element
         .text
-        .split(".")
+        .split(". ")
         .map((phrase) => phrase = phrase.trim().isEmpty ? "" : "*${phrase.trim()}*")
         .join(". ")
-        .trim());
+        .trim()
+        + " ");
 
     document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
