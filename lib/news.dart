@@ -115,15 +115,15 @@ class _NewsState extends State<News> {
 
                     final SerializableNews serializableNews = SerializableNews.fromRssItem(widget.item);
 
+                    final SerializableNews updatedSerializableNews = serializableNews.copyWith(content: content);
+
                     if (FavoritesManager.isFavorite(serializableNews))
-                      FavoritesManager.update(serializableNews, serializableNews.copyWith(
-                        content: content,
-                      ));
+                      FavoritesManager.update(serializableNews, updatedSerializableNews);
 
                     Navigator
                       .of(context)
                       .pushReplacement(MaterialPageRoute(
-                        builder: (context) => News(serializableNews.toRssItem()),
+                        builder: (context) => News(updatedSerializableNews.toRssItem()),
                       ));
                   }
                   on SocketException
