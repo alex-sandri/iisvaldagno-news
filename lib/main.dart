@@ -247,15 +247,15 @@ class _HomeState extends State<Home> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.rss_feed),
-              title: Text("Feed"),
+              label: "Feed",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.category),
-              title: Text("Categorie"),
+              label: "Categorie",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.favorite),
-              title: Text("Preferiti"),
+              label: "Preferiti",
             ),
           ],
           currentIndex: _currentIndex,
