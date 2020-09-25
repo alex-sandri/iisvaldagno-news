@@ -56,6 +56,8 @@ class _NewsState extends State<News> {
 
   double _opacity = 1;
 
+  bool _isUpdating = false;
+
   @override
   Widget build(BuildContext context) {
     final document = parse(widget.item.content.value);
@@ -105,6 +107,8 @@ class _NewsState extends State<News> {
                 onPressed: () async {
                   try
                   {
+                    setState(() => _isUpdating = true);
+
                     final http.Response response = await http.get(widget.item.link);
 
                     final String content = parse(response.body).querySelector(".entry-content").innerHtml;
@@ -116,9 +120,11 @@ class _NewsState extends State<News> {
                         content: content,
                       ));
 
-                    Scaffold
+                    Navigator
                       .of(context)
-                      .showSnackBar(SnackBar(content: Text("Notizia aggiornata")));
+                      .pushReplacement(MaterialPageRoute(
+                        builder: (context) => News(serializableNews.toRssItem()),
+                      ));
                   }
                   on SocketException
                   {
@@ -209,6 +215,7 @@ class _NewsState extends State<News> {
             controller: _scrollController,
             padding: EdgeInsets.all(8),
             children: [
+              if (_isUpdating) LinearProgressIndicator(),
               Wrap(
                 spacing: 4,
                 children: widget.item.categories.map((category) {
