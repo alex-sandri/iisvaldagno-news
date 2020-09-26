@@ -56,7 +56,33 @@ class _NewsState extends State<News> {
 
   double _opacity = 1;
 
-  bool _isUpdating = false;
+  Future<void> _handleRefresh() async {
+    try
+    {
+      final http.Response response = await http.get(widget.item.link);
+
+      final String content = parse(response.body).querySelector(".entry-content").innerHtml;
+
+      final SerializableNews serializableNews = SerializableNews.fromRssItem(widget.item);
+
+      final SerializableNews updatedSerializableNews = serializableNews.copyWith(content: content);
+
+      if (FavoritesManager.isFavorite(serializableNews))
+        FavoritesManager.update(serializableNews, updatedSerializableNews);
+
+      Navigator
+        .of(context)
+        .pushReplacement(MaterialPageRoute(
+          builder: (context) => News(updatedSerializableNews.toRssItem()),
+        ));
+    }
+    on SocketException
+    {
+      Scaffold
+        .of(context)
+        .showSnackBar(SnackBar(content: Text("Nessuna connessione a Internet")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,41 +126,6 @@ class _NewsState extends State<News> {
             widget.item.title.replaceAllMapped(RegExp("."), (match) => match.group(0) + "\u200b"),
           ),
           actions: [
-            Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.refresh),
-                tooltip: "Ricarica",
-                onPressed: () async {
-                  try
-                  {
-                    setState(() => _isUpdating = true);
-
-                    final http.Response response = await http.get(widget.item.link);
-
-                    final String content = parse(response.body).querySelector(".entry-content").innerHtml;
-
-                    final SerializableNews serializableNews = SerializableNews.fromRssItem(widget.item);
-
-                    final SerializableNews updatedSerializableNews = serializableNews.copyWith(content: content);
-
-                    if (FavoritesManager.isFavorite(serializableNews))
-                      FavoritesManager.update(serializableNews, updatedSerializableNews);
-
-                    Navigator
-                      .of(context)
-                      .pushReplacement(MaterialPageRoute(
-                        builder: (context) => News(updatedSerializableNews.toRssItem()),
-                      ));
-                  }
-                  on SocketException
-                  {
-                    Scaffold
-                      .of(context)
-                      .showSnackBar(SnackBar(content: Text("Nessuna connessione a Internet")));
-                  }
-                },
-              ),
-            ),
             IconButton(
               icon: Icon(Icons.open_in_new),
               tooltip: "Apri nel browser",
@@ -211,67 +202,72 @@ class _NewsState extends State<News> {
 
             return true;
           },
-          child: ListView(
-            controller: _scrollController,
-            padding: EdgeInsets.all(8),
-            children: [
-              if (_isUpdating) LinearProgressIndicator(),
-              Wrap(
-                spacing: 4,
-                children: widget.item.categories.map((category) {
-                  Color chipColor;
+          child: RefreshIndicator(
+            color: Colors.white,
+            backgroundColor: Colors.blue,
+            onRefresh: _handleRefresh,
+            child: ListView(
+              physics: AlwaysScrollableScrollPhysics(),
+              controller: _scrollController,
+              padding: EdgeInsets.all(8),
+              children: [
+                Wrap(
+                  spacing: 4,
+                  children: widget.item.categories.map((category) {
+                    Color chipColor;
 
-                  switch (category.value)
-                  {
-                    case "Notizie in evidenza": chipColor = Color(0xff013777); break;
-                    case "In evidenza ITI": chipColor = Color(0xffa6d514); break;
-                    case "In evidenza ITE": chipColor = Color(0xffff9100); break;
-                    case "In evidenza IP": chipColor = Color(0xff1f8ebf); break;
-                  }
+                    switch (category.value)
+                    {
+                      case "Notizie in evidenza": chipColor = Color(0xff013777); break;
+                      case "In evidenza ITI": chipColor = Color(0xffa6d514); break;
+                      case "In evidenza ITE": chipColor = Color(0xffff9100); break;
+                      case "In evidenza IP": chipColor = Color(0xff1f8ebf); break;
+                    }
 
-                  return ActionChip(
-                    backgroundColor: chipColor,
-                    label: Text(
-                      category.value,
-                    ),
-                    labelStyle: chipColor != null
-                      ? TextStyle(
-                          backgroundColor: chipColor,
-                        )
-                      : null,
-                    onPressed: () {
-                      String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}/page/{{PAGE}}/?feed=rss2";
+                    return ActionChip(
+                      backgroundColor: chipColor,
+                      label: Text(
+                        category.value,
+                      ),
+                      labelStyle: chipColor != null
+                        ? TextStyle(
+                            backgroundColor: chipColor,
+                          )
+                        : null,
+                      onPressed: () {
+                        String url = News.categories[category.value] ?? "https://www.iisvaldagno.it/tag/${category.value}/page/{{PAGE}}/?feed=rss2";
 
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => Home(url),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Home(url),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
 
-              if (widget.item.categories.isNotEmpty)
+                if (widget.item.categories.isNotEmpty)
+                  SizedBox(
+                    height: 8,
+                  ),
+
+                SelectableText(
+                  widget.item.title,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
                 SizedBox(
                   height: 8,
                 ),
-
-              SelectableText(
-                widget.item.title,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              MarkdownBody(
-                data: document.body.text.trim(),
-                selectable: true,
-                onTapLink: (url) async {
-                  if (await canLaunch(url)) await launch(url);
-                },
-              ),
-            ],
+                MarkdownBody(
+                  data: document.body.text.trim(),
+                  selectable: true,
+                  onTapLink: (url) async {
+                    if (await canLaunch(url)) await launch(url);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         floatingActionButton: AnimatedOpacity(
