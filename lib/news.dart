@@ -103,9 +103,7 @@ class _NewsState extends State<News> {
         .text
         .split(". ")
         .map((phrase) => phrase = phrase.trim().isEmpty ? "" : "**${phrase.trim()}**")
-        .join(". ")
-        .trim()
-        + " ");
+        .join(". "));
 
     document.querySelectorAll("em").forEach((element) =>
       element.text =
@@ -113,9 +111,7 @@ class _NewsState extends State<News> {
         .text
         .split(". ")
         .map((phrase) => phrase = phrase.trim().isEmpty ? "" : "*${phrase.trim()}*")
-        .join(". ")
-        .trim()
-        + " ");
+        .join(". "));
 
     document.querySelectorAll("p").forEach((element) => element.text += "\n\n");
 
