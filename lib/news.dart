@@ -88,6 +88,8 @@ class _NewsState extends State<News> {
   Widget build(BuildContext context) {
     final document = parse(widget.item.content.value);
 
+    document.querySelectorAll("img").forEach((element) => element.text = "![Immagine](${element.attributes["src"]})");
+
     document.querySelectorAll("a").forEach((element) {
       // Remove download count
       element.querySelector("span.badge")?.remove();
