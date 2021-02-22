@@ -90,6 +90,17 @@ class _NewsState extends State<News> {
 
     document.querySelectorAll("img").forEach((element) => element.text = "![Immagine](${element.attributes["src"]})");
 
+    document.querySelectorAll("iframe").forEach((element) {
+      final String src = element.attributes["src"];
+
+      if (src.startsWith("https://www.youtube.com/embed/"))
+      {
+        final String videoId = src.split("https://www.youtube.com/embed/")[1].split("?")[0];
+
+        element.text = "[![Video](https://img.youtube.com/vi/$videoId/0.jpg)](https://www.youtube.com/watch?v=$videoId)";
+      }
+    });
+
     document.querySelectorAll("a").forEach((element) {
       // Remove download count
       element.querySelector("span.badge")?.remove();
