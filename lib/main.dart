@@ -212,9 +212,12 @@ class _HomeState extends State<Home> {
                     : 1,
                   itemBuilder: (context, index) {
                     if (FavoritesManager.getAll().isEmpty)
-                      return SelectableText(
-                        "Non hai ancora aggiunto nulla ai preferiti",
-                        textAlign: TextAlign.center,
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: SelectableText(
+                          "Non hai ancora aggiunto nulla ai preferiti",
+                          textAlign: TextAlign.center,
+                        ),
                       );
 
                     final SerializableNews news = FavoritesManager.getAll()[index];
