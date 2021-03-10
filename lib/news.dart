@@ -78,7 +78,7 @@ class _NewsState extends State<News> {
     }
     on SocketException
     {
-      Scaffold
+      ScaffoldMessenger
         .of(context)
         .showSnackBar(SnackBar(content: Text("Nessuna connessione a Internet")));
     }
@@ -292,7 +292,7 @@ class _NewsState extends State<News> {
                     ? await FavoritesManager.delete(SerializableNews.fromRssItem(widget.item))
                     : await FavoritesManager.add(SerializableNews.fromRssItem(widget.item));
 
-                  Scaffold
+                  ScaffoldMessenger
                     .of(context)
                     .showSnackBar(SnackBar(content: Text("'${widget.item.title}' ${isAlreadyInFavorites ? "rimosso dai preferiti" : "aggiunto ai preferiti"}")));
 

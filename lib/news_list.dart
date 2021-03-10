@@ -120,14 +120,13 @@ class _NewsListState extends State<NewsList> {
                   return Center(
                     child: Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.all(4),
-                          child: Text(
-                            "Nessuna connessione a Internet",
-                            textAlign: TextAlign.center,
-                          ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Nessuna connessione a Internet",
+                          textAlign: TextAlign.center,
                         ),
-                        FlatButton(
+                        SizedBox(height: 10),
+                        TextButton(
                           onPressed: () {
                             setState(() {
                               _items = null;
@@ -135,8 +134,16 @@ class _NewsListState extends State<NewsList> {
 
                             _handleRefresh();
                           },
-                          color: Colors.black45,
-                          child: Text("Riprova"),
+                          child: Text(
+                            "Riprova",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                            padding: MaterialStateProperty.all(EdgeInsets.all(15)),
+                          ),
                         ),
                       ],
                     ),
@@ -163,18 +170,21 @@ class _NewsListState extends State<NewsList> {
 
                   if (!_showLoadMoreButton) return Container();
 
-                  return FlatButton(
-                    color: Theme.of(context).primaryColor,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    padding: EdgeInsets.all(15),
+                  return TextButton(
                     child: Text(
                       "Carica più elementi",
                       style: TextStyle(
                         color: Colors.white,
                       ),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(15)),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
                     ),
                     onPressed: _loadMore,
                   );
