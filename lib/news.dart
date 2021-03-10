@@ -115,7 +115,21 @@ class _NewsState extends State<News> {
         element
         .text
         .split(". ")
-        .map((phrase) => phrase = phrase.trim().isEmpty ? "" : "**${phrase.trim()}**")
+        .map((phrase) {
+          if (phrase.trim().isEmpty)
+          {
+            return "";
+          }
+
+          String newPhrase = "**${phrase.trim()}**";
+
+          if (phrase.endsWith(" "))
+          {
+            newPhrase += " ";
+          }
+
+          return newPhrase;
+        })
         .join(". "));
 
     document.querySelectorAll("em").forEach((element) =>
